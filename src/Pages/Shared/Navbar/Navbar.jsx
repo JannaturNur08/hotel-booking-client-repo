@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import './Navbar.css';
 
 
 const Navbar = () => {
@@ -9,7 +10,7 @@ const Navbar = () => {
 				<NavLink
 					to="/"
 					className={({ isActive, isPending }) =>
-						isPending ? "pending" : isActive ? "active  " : ""
+						isPending ? "pending" : isActive ? "active underline" : ""
 					}>
 					Home
 				</NavLink>
@@ -18,7 +19,7 @@ const Navbar = () => {
 				<NavLink
 					to="/rooms"
 					className={({ isActive, isPending }) =>
-						isPending ? "pending" : isActive ? "active " : ""
+						isPending ? "pending" : isActive ? "active underline" : ""
 					}>
 					Rooms
 				</NavLink>
@@ -27,7 +28,7 @@ const Navbar = () => {
 				<NavLink
 					to="/myBookings"
 					className={({ isActive, isPending }) =>
-						isPending ? "pending" : isActive ? "active  " : ""
+						isPending ? "pending" : isActive ? "active underline" : ""
 					}>
 					My Bookings
 				</NavLink>
