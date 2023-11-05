@@ -42,8 +42,8 @@ const Login = () => {
 			.catch((error) => console.log(error));
 	};
     return (
-        <div>
-            <h2 className="font-mercellus lg:text-3xl">Login</h2>
+        <div className="lg:w-3/4 mx-auto mt-20">
+            <h2 className="font-mercellus lg:text-4xl">Login</h2>
             <form onSubmit={handleLogin}>
 							<div className="form-control">
 								<label className="label">
@@ -53,7 +53,7 @@ const Login = () => {
 									type="text"
 									name="email"
 									placeholder="email"
-									className="input input-bordered"
+									className="input input-bordered rounded"
 								/>
 							</div>
 							<div className="form-control">
@@ -64,7 +64,7 @@ const Login = () => {
 									type="password"
 									name="password"
 									placeholder="password"
-									className="input input-bordered"
+									className="input input-bordered rounded"
 								/>
 								<label className="label">
 									<a
@@ -74,7 +74,7 @@ const Login = () => {
 									</a>
 								</label>
 							</div>
-							<div className="lg:w-1/12 w-1/2  bg-primary text-white hover:bg-[#AB916C] font-mercellus text-center py-3 text-xl">
+							<div className="lg:w-1/12 w-1/2  bg-primary text-white hover:bg-[#AB916C] font-mercellus text-center py-3 text-base">
 								<input
 									
 									type="submit"

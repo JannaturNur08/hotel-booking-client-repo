@@ -30,30 +30,31 @@ const SignUp = () => {
 
     }
     return (
-        <div>
+        <div className="lg:w-3/4 mx-auto mt-20">
+            <h2 className="font-mercellus lg:text-4xl">SignUp</h2>
            <form onSubmit={handleSignUp}>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" name='name' placeholder="name" className="input input-bordered" />
+                                <input type="text" name='name' placeholder="name" className="input input-bordered rounded" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" name='email' placeholder="email" className="input input-bordered" />
+                                <input type="text" name='email' placeholder="email" className="input input-bordered rounded" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Confirm Password</span>
                                 </label>
-                                <input type="password" name='password' placeholder="password" className="input input-bordered" />
+                                <input type="password" name='password' placeholder="password" className="input input-bordered rounded" />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
-                            <div className="lg:w-1/12 w-1/2  bg-primary text-white hover:bg-[#AB916C] font-mercellus text-center py-3 text-xl">
+                            <div className="lg:w-1/12 w-1/2  bg-primary text-white hover:bg-[#AB916C] font-mercellus text-center py-3 text-base">
 								<input
 									
 									type="submit"
