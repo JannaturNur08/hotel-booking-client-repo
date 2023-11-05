@@ -1,8 +1,21 @@
 import { Link, NavLink } from "react-router-dom";
 import './Navbar.css';
+import useAuth from "../../../hooks/useAuth";
 
 
 const Navbar = () => {
+    const { user , logOut} = useAuth();
+    const handleLogOut = () => {
+		logOut()
+			.then(() => {
+				//				window.location.reload();
+				console.log("Sign-out successful.");
+				<Link to="/"></Link>;
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
    
 	const navLinks = (
 		<>
@@ -55,7 +68,17 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-            <Link to='/login' className="px-5 py-2 bg-primary text-white hover:bg-[#AB916C] font-mercellus">Login</Link>
+            {
+                user?.email?( <>
+						<button onClick={handleLogOut} className="px-5 py-2 bg-primary text-white hover:bg-[#AB916C] font-mercellus">LogOut</button>
+                        </>
+					
+                ) : ( <>
+                    <Link to='/login' className="px-5 py-2 bg-primary text-white hover:bg-[#AB916C] font-mercellus">Login</Link>
+                    </>
+                )
+            }
+           
          
         </div>
       </div>

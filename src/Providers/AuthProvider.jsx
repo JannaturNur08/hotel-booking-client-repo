@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -29,7 +30,7 @@ const AuthProvider = ({ children }) => {
 
 	const googleSignIn = () => {
 		setLoading(true);
-		return signInWithPopup(auth,new GoogleAuthProvider());
+		return signInWithPopup(auth, googleProvider);
 	};
 
 	const logOut = () => {
@@ -39,32 +40,31 @@ const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			//const userEmail = currentUser?.email || user?.email;
-			//const loggedUser = { email: userEmail };
+			const userEmail = currentUser?.email || user?.email;
+			const loggedUser = { email: userEmail };
 			setUser(currentUser);
 			console.log("current user in auth Provider", currentUser);
 			setLoading(false);
-			//     if (currentUser) {
-			// 		axios
-			// 			.post(
-			// 				"https://car-doctor-server-three-silk.vercel.app/jwt",
-			// 				loggedUser,
-			// 				{ withCredentials: true }
-			// 			)
-			// 			.then((res) => {
-			// 				console.log("token response", res.data);
-			// 			});
-			// 	} else {
-			// 		axios
-			// 			.post(
-			// 				"https://car-doctor-server-three-silk.vercel.app/logout",
-			// 				loggedUser,
-			// 				{ withCredentials: true }
-			// 			)
-			// 			.then((res) => {
-			// 				console.log(res.data);
-			// 			});
-			// 	}
+			//if user exists then issue a token
+			if (currentUser) {
+				axios.post(
+						"http://localhost:3000/jwt",
+						loggedUser,
+						{ withCredentials: true }
+					)
+					.then((res) => {
+						console.log("token response", res.data);
+					});
+			} else {
+				axios.post(
+						"http://localhost:3000/logout",
+						loggedUser,
+						{ withCredentials: true }
+					)
+					.then((res) => {
+						console.log(res.data);
+					});
+			}
 		});
 		return () => {
 			return unsubscribe();
