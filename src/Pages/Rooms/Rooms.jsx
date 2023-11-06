@@ -22,8 +22,8 @@ const Rooms = () => {
 	};
 
 	return (
-		<div>
-			<div>
+		<div >
+			<div >
 				<div className="carousel-item relative w-full">
 					<img
 						src="https://i.ibb.co/smSHP7g/Account-header.jpg"

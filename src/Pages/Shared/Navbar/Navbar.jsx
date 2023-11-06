@@ -50,7 +50,7 @@ const Navbar = () => {
 	);
     
     return (
-        <div className="navbar  text-secondary text-xl jost lg:w-3/4 mx-auto">
+        <div className="navbar  text-secondary text-xl jost lg:w-3/4 mx-auto p-5">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">

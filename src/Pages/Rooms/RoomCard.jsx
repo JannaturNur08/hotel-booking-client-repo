@@ -51,7 +51,7 @@ const RoomCard = ({ room }) => {
 						<p>{rooms.bed} Beds </p>
 						<p> {rooms.bath} Baths </p>
 					</div>
-					<p>Price : $ {rooms.price}</p>
+					<p>Price : ${rooms.price}</p>
 				</div>
 			</Link>
 		</div>
