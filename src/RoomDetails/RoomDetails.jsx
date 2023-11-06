@@ -190,6 +190,7 @@ const RoomDetails = () => {
 											placeholder={`Available room ${roomCount}`}
 											className="input input-bordered w-full"
 										/>
+                                        { roomCount == 0 && <p className="text-red-400 font-medium"> No Available Room</p>}
 									</label>
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
