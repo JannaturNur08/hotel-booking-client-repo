@@ -12,65 +12,72 @@ const RoomDetails = () => {
 	let room = roomDetails.rooms.room_number;
 	console.log(room);
 	const [roomCount, setRoomCount] = useState(room);
-	const formRef = useRef(null); // Create a ref for the form
+	//const formRef = useRef(null); // Create a ref for the form
 
 	console.log(roomDetails.rooms.room_images);
 	const roomImages = roomDetails.rooms.room_images;
 
 	const handleBookNow = (e) => {
-		e.preventDefault();
+		if (roomCount > 0) {
+			e.preventDefault();
 
-		const form = e.target;
-		const today = moment().calendar();
-		const checkIn = form.Check_in_Date.value;
-		const checkOut = form.check_out_date.value;
-		const rooms = form.rooms.value;
+			const form = e.target;
+			const today = moment().calendar();
+			const checkIn = form.Check_in_Date.value;
+			const checkOut = form.check_out_date.value;
+			const rooms = form.rooms.value;
 
-		const name = form.name.value;
+			const name = form.name.value;
 
-		const price = form.price.value;
+			const price = form.price.value;
 
-		const newBooking = {
-			email,
-			today,
-			name,
-			checkIn,
-			checkOut,
-			rooms,
+			const newBooking = {
+				email,
+				today,
+				name,
+				checkIn,
+				checkOut,
+				rooms,
 
-			price,
-		};
+				price,
+			};
 
-		// send data to the server
-		fetch("http://localhost:3000/bookings", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newBooking),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
-				if (data.insertedId) {
-					Swal.fire({
-						title: "Success!",
-						text: "Successfully Added in th Bookings",
-						icon: "success",
-						confirmButtonText: "Confirmed",
-					});
-					const roomDecre = roomCount - rooms;
-					setRoomCount(roomDecre);
-					// Reset the form
-					formRef.current.reset();
-				} else {
-					Swal.fire({
-						title: "Error!",
-						text: "Failed To Add In The Bookings",
-					});
-				}
+			// send data to the server
+			fetch("http://localhost:3000/bookings", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newBooking),
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					if (data.insertedId) {
+						Swal.fire({
+							title: "Success!",
+							text: "Successfully Added in th Bookings",
+							icon: "success",
+							confirmButtonText: "Confirmed",
+						});
+						const roomDecre = roomCount - rooms;
+						setRoomCount(roomDecre);
+						// Reset the form
+						form.reset();
+					} else {
+						Swal.fire({
+							title: "Error!",
+							text: "Failed To Add In The Bookings",
+						});
+					}
+				});
+			//setRoomCount(e);
+		} else {
+			Swal.fire({
+				title: "Oops...",
+				text: "No available Rooms!",
 			});
-		//setRoomCount(e);
+		}
 	};
 	//     ● Room Description
 	// ● Price per Night
@@ -123,12 +130,13 @@ const RoomDetails = () => {
 								<p>Washing Machine</p>
 							</div>
 						</div>
-                        <h2 className="font-mercellus text-3xl">Reviews</h2>
+						<h2 className="font-mercellus text-3xl">Reviews</h2>
 						<div className="grid grid-cols-2 mt-10">
-                           
 							{roomDetails?.reviews.map((review, idx) => (
 								<div key={idx}>
-									<p className="font-mercellus text-xl font-medium">{review.customer_name}</p>
+									<p className="font-mercellus text-xl font-medium">
+										{review.customer_name}
+									</p>
 									<p>{review.review_text}</p>
 									<p>{review.rating}</p>
 								</div>
@@ -141,7 +149,7 @@ const RoomDetails = () => {
 							<div className="mb-8 mt-5">
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
-										<span className="label-text text-[#e2e2e2]">
+										<span className="label-text ">
 											Check In
 										</span>
 									</label>
@@ -156,7 +164,7 @@ const RoomDetails = () => {
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
-										<span className="label-text text-[#e2e2e2]">
+										<span className="label-text ">
 											Check Out
 										</span>
 									</label>
@@ -171,7 +179,7 @@ const RoomDetails = () => {
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
-										<span className="label-text text-[#e2e2e2]">
+										<span className="label-text ">
 											Rooms
 										</span>
 									</label>
@@ -179,14 +187,14 @@ const RoomDetails = () => {
 										<input
 											type="text"
 											name="rooms"
-											placeholder={`available rooms ${roomCount}`}
+											placeholder={`Available room ${roomCount}`}
 											className="input input-bordered w-full"
 										/>
 									</label>
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
-										<span className="label-text text-[#e2e2e2]">
+										<span className="label-text ">
 											Adults
 										</span>
 									</label>
@@ -201,7 +209,7 @@ const RoomDetails = () => {
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
-										<span className="label-text text-[#e2e2e2]">
+										<span className="label-text ">
 											Children
 										</span>
 									</label>
@@ -219,7 +227,7 @@ const RoomDetails = () => {
 								<div className=" mb-8">
 									<div className="form-control md:w-1/2 mx-auto mb-2">
 										<label className="label">
-											<span className="label-text text-[#e2e2e2]">
+											<span className="label-text ">
 												Total Cost
 											</span>
 										</label>
@@ -240,8 +248,10 @@ const RoomDetails = () => {
 									<input
 										type="submit"
 										value="Book Now"
+                                        disabled={roomCount <= 0}
 										className="btn bg-[#20292e] text-[#c5c4c4]  md:w-1/2 text-center border-0"
 									/>
+									
 								</div>
 							</div>
 						</form>
