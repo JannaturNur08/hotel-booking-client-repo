@@ -1,164 +1,130 @@
-
-    [
-      {
-        "category_name": "Standard Room",
-        "room_id" : 1,
-        "rooms": [
-          {
-            "room_number": 101,
-            "room_size": "300 sq ft",
-            "review_count": 0,
-            "check_in_date": "2023-11-15",
-            "check_out_date": "2023-11-20",
-            "adults": 2,
-            "children": 0,
-            "price": 100,
-            "room_images": [
-              "image1.jpg",
-              "image2.jpg",
-              "image3.jpg",
-              "image4.jpg",
-              "image5.jpg",
-              "image6.jpg"
-            ]
-           
-          }
-          
-        ],
-        "reviews": [
-            {
-              "customer_name": "John Doe",
-              "review_text": "Great room and service!",
-              "rating": 4
-            },
-            {
-              "customer_name": "Jane Smith",
-              "review_text": "Comfortable stay, highly recommended.",
-              "rating": 5
-            }
-          ]
-      },
-      {
-        "category_name": "Deluxe Suite",
-        "room_id" : 2,
-        "rooms": [
-          {
-            "room_number": 201,
-            "room_size": "500 sq ft",
-            "review_count": 0,
-            "check_in_date": "2023-11-15",
-            "check_out_date": "2023-11-20",
-            "adults": 2,
-            "children": 1,
-            "price": 200,
-            "room_images": [
-              "image7.jpg",
-              "image8.jpg",
-              "image9.jpg",
-              "image10.jpg",
-              "image11.jpg",
-              "image12.jpg"
-            ]
-            
-          }
-        ],
-          "reviews": [
-            {
-              "customer_name": "Alice Johnson",
-              "review_text": "Absolutely loved the Deluxe Suite!",
-              "rating": 5
-            },
-            {
-              "customer_name": "Bob Wilson",
-              "review_text": "Spacious and elegant room. Will visit again!",
-              "rating": 4
-            },
-            {
-              "customer_name": "Bob",
-              "review_text": "Spacious and elegant room. Will visit again!",
-              "rating": 3
-            }
-          ]
-         
-        
-      },
-      {
-        "category_name": "Family Room",
-        "room_id" : 3,
-        "rooms": [
-          {
-            "room_number": 301,
-            "room_size": "400 sq ft",
-            "review_count": 0,
-            "check_in_date": "2023-11-15",
-            "check_out_date": "2023-11-20",
-            "adults": 2,
-            "children": 2,
-            "price": 150,
-            "room_images": [
-              "image13.jpg",
-              "image14.jpg",
-              "image15.jpg",
-              "image16.jpg",
-              "image17.jpg",
-              "image18.jpg"
-            ]
-            
-          }
-          
-        ],
-        "reviews": [
-            {
-              "customer_name": "Sarah Davis",
-              "review_text": "Great for a family vacation. Spacious and clean.",
-              "rating": 5
-            },
-            {
-              "customer_name": "Mike Brown",
-              "review_text": "Perfect for a family of four. Kids enjoyed it.",
-              "rating": 4
-            }
-          ]
-      },
-      {
-        "category_name": "Executive Suite",
-        "room_id" : 4,
-        "rooms": [
-          {
-            "room_number": 401,
-            "room_size": "600 sq ft",
-            "review_count": 55,
-            "check_in_date": "2023-11-15",
-            "check_out_date": "2023-11-20",
-            "adults": 2,
-            "children": 0,
-            "price": 250,
-            "room_images": [
-              "image19.jpg",
-              "image20.jpg",
-              "image21.jpg",
-              "image22.jpg",
-              "image23.jpg",
-              "image24.jpg"
-            ]
-           
-          }
-        
-        ],
-        "reviews": [
-            {
-              "customer_name": "David White",
-              "review_text": "Luxurious suite, excellent service!",
-              "rating": 5
-            },
-            {
-              "customer_name": "Emily Clark",
-              "review_text": "Impressive room with all the amenities.",
-              "rating": 4
-            }
-          ]
-      }
-      
-    ]
-  
-  
+[
+	{
+		"category_name": "Standard Room",
+		"rooms": {
+			"room_number": 40,
+			"room_size": "300 sq ft",
+			"check_in_date": "2023-11-15",
+			"check_out_date": "2023-11-20",
+			"adults": 2,
+			"children": 0,
+			"price": 100,
+			"room_images": [
+				"https://i.ibb.co/pL2CC4V/Room1-1.jpg",
+				"https://i.ibb.co/g3qH6mb/Room1-2.jpg",
+				"https://i.ibb.co/HDzcVpH/Room1-3.jpg",
+				"https://i.ibb.co/gD1VTVB/Room1-4.jpg",
+				"https://i.ibb.co/Ltpp8hr/Room1-5.jpg"
+			]
+		},
+		"reviews": [
+			{
+				"customer_name": "John Doe",
+				"review_text": "Great room and service!",
+				"rating": 4
+			},
+			{
+				"customer_name": "Jane Smith",
+				"review_text": "Comfortable stay, highly recommended.",
+				"rating": 5
+			}
+		],
+		"description": "Our Standard Room offers a comfortable and affordable stay for travelers. The room is 300 square feet in size, perfect for two adults. It features a modern design with all the amenities you need for a pleasant stay. The room includes a queen-size bed, a private bathroom, and a small sitting area. You can enjoy a beautiful view from the window. The room is well-lit and furnished with elegant decor. Whether you're traveling for business or leisure, our Standard Room will provide you with a cozy and relaxing atmosphere."
+	},
+	{
+		"category_name": "Deluxe Suite",
+		"rooms": {
+			"room_number": 15,
+			"room_size": "500 sq ft",
+			"check_in_date": "2023-11-15",
+			"check_out_date": "2023-11-20",
+			"adults": 2,
+			"children": 1,
+			"price": 200,
+			"room_images": [
+				"https://i.ibb.co/f2cnW3f/Room2-1.jpg",
+				"https://i.ibb.co/23z5gQq/Room2-2.jpg",
+				"https://i.ibb.co/kyFx5Y0/Room2-3.jpg",
+				"https://i.ibb.co/k8V5QWf/Room2-4.jpg",
+				"https://i.ibb.co/Cw21r6m/Room2-5.jpg"
+			]
+		},
+		"reviews": [
+			{
+				"customer_name": "Alice Johnson",
+				"review_text": "Absolutely loved the Deluxe Suite!",
+				"rating": 5
+			},
+			{
+				"customer_name": "Bob Wilson",
+				"review_text": "Spacious and elegant room. Will visit again!",
+				"rating": 4
+			}
+		],
+		"description": "Indulge in luxury with our Deluxe Suite, a spacious 500-square-foot retreat. This suite is ideal for couples or small families with one child. The suite boasts a separate living area, a king-size bed, a private bathroom with a deep soaking tub, and a balcony with stunning views. The contemporary design and high-end furnishings make your stay comfortable and memorable. Enjoy the extra space and privacy in our Deluxe Suite, ensuring a relaxing and elegant experience."
+	},
+	{
+		"category_name": "Family Room",
+		"rooms": {
+			"room_number": 30,
+			"room_size": "400 sq ft",
+			"check_in_date": "2023-11-15",
+			"check_out_date": "2023-11-20",
+			"adults": 2,
+			"children": 2,
+			"price": 150,
+			"room_images": [
+				"https://i.ibb.co/HG3fwRs/Room3-1.jpg",
+				"https://i.ibb.co/s9zJ2LK/Room3-2.jpg",
+				"https://i.ibb.co/rw5XGw0/Room3-3.jpg",
+				"https://i.ibb.co/mFv6YVb/Room3-4.jpg",
+				"https://i.ibb.co/hRK6pX3/Room3-5.jpg"
+			]
+		},
+		"reviews": [
+			{
+				"customer_name": "Sarah Davis",
+				"review_text": "Great for a family vacation. Spacious and clean.",
+				"rating": 5
+			},
+			{
+				"customer_name": "Mike Brown",
+				"review_text": "Perfect for a family of four. Kids enjoyed it.",
+				"rating": 4
+			}
+		],
+		"description": "Our Family Room is designed to accommodate families of up to four, making it an excellent choice for your family vacation. This room is 400 square feet, providing ample space for both adults and children. It features two separate sleeping areas, one with a queen-size bed for parents and the other with two twin beds for the kids. The room is well-lit and decorated with family-friendly furnishings. The private bathroom is spacious and convenient. Enjoy a relaxing stay with your loved ones in our Family Room."
+	},
+	{
+		"category_name": "Executive Suite",
+		"rooms": {
+			"room_number": 10,
+			"room_size": "600 sq ft",
+			"check_in_date": "2023-11-15",
+			"check_out_date": "2023-11-20",
+			"adults": 2,
+			"children": 0,
+			"price": 250,
+			"room_images": [
+				"https://i.ibb.co/jH4DP7W/Room4-1.jpg",
+				"https://i.ibb.co/DRJXFjW/Room4-2.jpg",
+				"https://i.ibb.co/6XWQKzN/Room4-3.jpg",
+				"https://i.ibb.co/bdJ5DMY/Room4-4.jpg",
+				"https://i.ibb.co/qC9LzXL/Room4-5.jpg"
+			]
+		},
+		"reviews": [
+			{
+				"customer_name": "David White",
+				"review_text": "Luxurious suite, excellent service!",
+				"rating": 5
+			},
+			{
+				"customer_name": "Emily Clark",
+				"review_text": "Impressive room with all the amenities.",
+				"rating": 4
+			}
+		],
+		"description": "Experience the pinnacle of luxury with our Executive Suite, a spacious 600-square-foot retreat designed for discerning travelers. The suite features a king-size bed, a private bathroom with a whirlpool tub, a separate living area, and a private balcony with breathtaking views. The decor is elegant and stylish, creating a sophisticated ambiance. Whether you're on a romantic getaway or a business trip, our Executive Suite provides you with all the amenities you need for a lavish stay."
+	}
+]

@@ -12,6 +12,7 @@ const Rooms = () => {
 	});
 	const [count, setReviewCount] = useState(0);
 	// Access the first room in the array, for example
+    // review count
 	let specificRoomId = 1;
 	let specificRoom = room.find((room) => room.room_id === specificRoomId);
 	if (specificRoom) {
@@ -19,6 +20,33 @@ const Rooms = () => {
 		setReviewCount(reviewCount);
 		console.log(reviewCount);
 	}
+
+    // room count
+
+
+   let allRooms = room.map((room) => room.room_id).join(", ");
+   console.log(allRooms);
+    if (specificRoom) {
+        const roomNumber = specificRoom.rooms.room_number;
+        console.log(`Room Number for room_id ${specificRoomId}: ${roomNumber}`);
+      } else {
+        console.log(`Room with room_id ${specificRoomId} not found.`);
+      }
+
+    if(specificRoom){
+        let numberOfRooms = specificRoom.rooms[0].room_number;
+        console.log(numberOfRooms);
+        const roomNumber = [];
+        for (let i = 1; i <= numberOfRooms; i++) {
+            roomNumber.push(i);
+            numberOfRooms--;
+        }
+       
+        console.log(roomNumber);
+        console.log(numberOfRooms);
+      }
+
+    
 
 	// const totalReviews = room.reduce((total, room) => total + room.reviews.length, 0);
 
@@ -33,6 +61,7 @@ const Rooms = () => {
 			.then((data) => setRoom(data));
 	}, []);
 
+    // new review add
 	const handleReviewSubmit = (specificRoomId) => {
 		// Create a copy of the room object to avoid mutating the state directly
 		const updatedRoom = { ...room };
