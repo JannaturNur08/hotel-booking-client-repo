@@ -1,17 +1,25 @@
-import { useEffect, useState } from "react";
+
+import useRooms from "../../hooks/useRooms";
+import RoomCard from "./RoomCard";
 
 const Rooms = () => {
-	const [room, setRoom] = useState([]);
-	useEffect(() => {
-		fetch("room.json")
-			.then((res) => res.json())
-			.then((data) => setRoom(data));
-	}, []);
+	
+    const rooms = useRooms();
+	
 	
 	
 	return (
 		<div>
 			<h2>Room Page</h2>
+            <div className="text-center">
+           
+			
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {
+                    rooms.map(room => <RoomCard room={room} key={room._id}></RoomCard>)
+                }
+            </div>
 		</div>
 	);
 };
