@@ -1,0 +1,164 @@
+
+    [
+      {
+        "category_name": "Standard Room",
+        "room_id" : 1,
+        "rooms": [
+          {
+            "room_number": 101,
+            "room_size": "300 sq ft",
+            "review_count": 0,
+            "check_in_date": "2023-11-15",
+            "check_out_date": "2023-11-20",
+            "adults": 2,
+            "children": 0,
+            "price": 100,
+            "room_images": [
+              "image1.jpg",
+              "image2.jpg",
+              "image3.jpg",
+              "image4.jpg",
+              "image5.jpg",
+              "image6.jpg"
+            ]
+           
+          }
+          
+        ],
+        "reviews": [
+            {
+              "customer_name": "John Doe",
+              "review_text": "Great room and service!",
+              "rating": 4
+            },
+            {
+              "customer_name": "Jane Smith",
+              "review_text": "Comfortable stay, highly recommended.",
+              "rating": 5
+            }
+          ]
+      },
+      {
+        "category_name": "Deluxe Suite",
+        "room_id" : 2,
+        "rooms": [
+          {
+            "room_number": 201,
+            "room_size": "500 sq ft",
+            "review_count": 0,
+            "check_in_date": "2023-11-15",
+            "check_out_date": "2023-11-20",
+            "adults": 2,
+            "children": 1,
+            "price": 200,
+            "room_images": [
+              "image7.jpg",
+              "image8.jpg",
+              "image9.jpg",
+              "image10.jpg",
+              "image11.jpg",
+              "image12.jpg"
+            ]
+            
+          }
+        ],
+          "reviews": [
+            {
+              "customer_name": "Alice Johnson",
+              "review_text": "Absolutely loved the Deluxe Suite!",
+              "rating": 5
+            },
+            {
+              "customer_name": "Bob Wilson",
+              "review_text": "Spacious and elegant room. Will visit again!",
+              "rating": 4
+            },
+            {
+              "customer_name": "Bob",
+              "review_text": "Spacious and elegant room. Will visit again!",
+              "rating": 3
+            }
+          ]
+         
+        
+      },
+      {
+        "category_name": "Family Room",
+        "room_id" : 3,
+        "rooms": [
+          {
+            "room_number": 301,
+            "room_size": "400 sq ft",
+            "review_count": 0,
+            "check_in_date": "2023-11-15",
+            "check_out_date": "2023-11-20",
+            "adults": 2,
+            "children": 2,
+            "price": 150,
+            "room_images": [
+              "image13.jpg",
+              "image14.jpg",
+              "image15.jpg",
+              "image16.jpg",
+              "image17.jpg",
+              "image18.jpg"
+            ]
+            
+          }
+          
+        ],
+        "reviews": [
+            {
+              "customer_name": "Sarah Davis",
+              "review_text": "Great for a family vacation. Spacious and clean.",
+              "rating": 5
+            },
+            {
+              "customer_name": "Mike Brown",
+              "review_text": "Perfect for a family of four. Kids enjoyed it.",
+              "rating": 4
+            }
+          ]
+      },
+      {
+        "category_name": "Executive Suite",
+        "room_id" : 4,
+        "rooms": [
+          {
+            "room_number": 401,
+            "room_size": "600 sq ft",
+            "review_count": 55,
+            "check_in_date": "2023-11-15",
+            "check_out_date": "2023-11-20",
+            "adults": 2,
+            "children": 0,
+            "price": 250,
+            "room_images": [
+              "image19.jpg",
+              "image20.jpg",
+              "image21.jpg",
+              "image22.jpg",
+              "image23.jpg",
+              "image24.jpg"
+            ]
+           
+          }
+        
+        ],
+        "reviews": [
+            {
+              "customer_name": "David White",
+              "review_text": "Luxurious suite, excellent service!",
+              "rating": 5
+            },
+            {
+              "customer_name": "Emily Clark",
+              "review_text": "Impressive room with all the amenities.",
+              "rating": 4
+            }
+          ]
+      }
+      
+    ]
+  
+  
