@@ -8,6 +8,9 @@
 			"check_out_date": "2023-11-20",
 			"adults": 2,
 			"children": 0,
+			"bed": 3,
+			"bath": 3,
+			"guest": 6,
 			"price": 100,
 			"room_images": [
 				"https://i.ibb.co/pL2CC4V/Room1-1.jpg",
@@ -40,6 +43,9 @@
 			"check_out_date": "2023-11-20",
 			"adults": 2,
 			"children": 1,
+			"bed": 2,
+			"bath": 2,
+			"guest": 4,
 			"price": 200,
 			"room_images": [
 				"https://i.ibb.co/f2cnW3f/Room2-1.jpg",
@@ -72,6 +78,9 @@
 			"check_out_date": "2023-11-20",
 			"adults": 2,
 			"children": 2,
+			"bed": 4,
+			"bath": 4,
+			"guest": 8,
 			"price": 150,
 			"room_images": [
 				"https://i.ibb.co/HG3fwRs/Room3-1.jpg",
@@ -104,6 +113,9 @@
 			"check_out_date": "2023-11-20",
 			"adults": 2,
 			"children": 0,
+			"bed": 1,
+			"bath": 1,
+			"guest": 2,
 			"price": 250,
 			"room_images": [
 				"https://i.ibb.co/jH4DP7W/Room4-1.jpg",
