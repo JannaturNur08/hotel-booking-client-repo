@@ -1,11 +1,78 @@
 import { useLoaderData } from "react-router-dom";
-import useReviewCount from "../hooks/useReviewCount";
+
+import { useRef, useState } from "react";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import moment from "moment";
 
 const RoomDetails = () => {
+	const { user } = useAuth();
+	const email = user.email;
 	const roomDetails = useLoaderData();
+	let room = roomDetails.rooms.room_number;
+	console.log(room);
+	const [roomCount, setRoomCount] = useState(room);
+    const formRef = useRef(null); // Create a ref for the form
 
 	console.log(roomDetails.rooms.room_images);
 	const roomImages = roomDetails.rooms.room_images;
+
+	const handleBookNow = (e) => {
+		e.preventDefault();
+
+		const form = e.target;
+		const today = moment().calendar();
+		const checkIn = form.Check_in_Date.value;
+		const checkOut = form.check_out_date.value;
+		const rooms = form.rooms.value;
+
+		const name = form.name.value;
+
+		const price = form.price.value;
+        
+
+		const newBooking = {
+			email,
+			today,
+			name,
+			checkIn,
+			checkOut,
+			rooms,
+
+			price,
+		};
+
+		// send data to the server
+		fetch("http://localhost:3000/bookings", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newBooking),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+				if (data.insertedId) {
+					Swal.fire({
+						title: "Success!",
+						text: "Successfully Added in th Bookings",
+						icon: "success",
+						confirmButtonText: "Confirmed",
+					});
+					const roomDecre = roomCount - rooms;
+					setRoomCount(roomDecre);
+					// Reset the form
+					formRef.current.reset();
+				} else {
+					Swal.fire({
+						title: "Error!",
+						text: "Failed To Add In The Bookings",
+					});
+				}
+			});
+		//setRoomCount(e);
+	};
 	//     ● Room Description
 	// ● Price per Night
 	// ● Room Size
@@ -57,7 +124,7 @@ const RoomDetails = () => {
 						</div>
 					</div>
 					<div>
-						<form>
+						<form onSubmit={handleBookNow}>
 							{/* form row */}
 							<div className="mb-8 mt-5">
 								<div className="form-control md:w-1/2 mx-auto mb-2">
@@ -100,7 +167,7 @@ const RoomDetails = () => {
 										<input
 											type="text"
 											name="rooms"
-											placeholder="Rooms"
+											placeholder={`available rooms ${roomCount}`}
 											className="input input-bordered w-full"
 										/>
 									</label>
@@ -147,7 +214,7 @@ const RoomDetails = () => {
 										<label className="input-group">
 											<input
 												type="text"
-												name="details"
+												name="price"
 												defaultValue={
 													roomDetails.rooms.price
 												}
