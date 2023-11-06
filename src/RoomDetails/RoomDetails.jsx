@@ -12,7 +12,7 @@ const RoomDetails = () => {
 	let room = roomDetails.rooms.room_number;
 	console.log(room);
 	const [roomCount, setRoomCount] = useState(room);
-    const formRef = useRef(null); // Create a ref for the form
+	const formRef = useRef(null); // Create a ref for the form
 
 	console.log(roomDetails.rooms.room_images);
 	const roomImages = roomDetails.rooms.room_images;
@@ -29,7 +29,6 @@ const RoomDetails = () => {
 		const name = form.name.value;
 
 		const price = form.price.value;
-        
 
 		const newBooking = {
 			email,
@@ -112,8 +111,10 @@ const RoomDetails = () => {
 							<p> {roomDetails.rooms.bath} Baths </p>
 						</div>
 						<div className="space-y-4">
-							<p>{roomDetails.description}</p>
-							<p className="font-mercellus text-3xl">
+							<p className="font-jost text-xl">
+								{roomDetails.description}
+							</p>
+							<p className="font-mercellus text-3xl mt-5">
 								Family-friendly Amenities
 							</p>
 							<div className="flex flex-row gap-3">
@@ -121,6 +122,17 @@ const RoomDetails = () => {
 								<p>Extra Beds/Baby Crib</p>
 								<p>Washing Machine</p>
 							</div>
+						</div>
+                        <h2 className="font-mercellus text-3xl">Reviews</h2>
+						<div className="grid grid-cols-2 mt-10">
+                           
+							{roomDetails?.reviews.map((review, idx) => (
+								<div key={idx}>
+									<p className="font-mercellus text-xl font-medium">{review.customer_name}</p>
+									<p>{review.review_text}</p>
+									<p>{review.rating}</p>
+								</div>
+							))}
 						</div>
 					</div>
 					<div>
