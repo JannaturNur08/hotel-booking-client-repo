@@ -42,7 +42,7 @@ const Rooms = () => {
 				</div>
 			</div>
 
-			<div className="lg:w-3/4 mx-auto mt-10 space-y-6">
+			<div className="lg:w-3/4 mx-auto mt-10 ">
 				<p className="font-mercellus text-2xl">Price</p>
 				<input
 					type="range"
@@ -50,10 +50,10 @@ const Rooms = () => {
 					max={500}
 					value={maxPrice}
 					onChange={handleSliderChange}
-					className="range range-warning w-1/2"
+					className="range range-warning w-4/12 mt-2"
 				/>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-7 mt-5 ">
 					{sortedRooms.map((room) => (
 						<RoomCard room={room} key={room._id}></RoomCard>
 					))}

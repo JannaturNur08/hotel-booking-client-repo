@@ -46,7 +46,6 @@ const RoomCard = ({ room }) => {
 			</div>
 			<p>Price : $ {rooms.price}</p>
 
-			<p>Review : {reviews.length}</p>
 		</div>
 	);
 };
