@@ -63,7 +63,7 @@ const Navbar = () => {
           <a className="btn btn-ghost normal-case lg:text-3xl">COZYSTAY</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="flex gap-6 px-1 font-medium ">
+          <ul className="flex gap-6 px-1 font-normal font-jost text-base">
            {navLinks}
           </ul>
         </div>
