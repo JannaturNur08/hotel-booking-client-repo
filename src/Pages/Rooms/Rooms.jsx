@@ -3,11 +3,11 @@ import useRooms from "../../hooks/useRooms";
 import RoomCard from "./RoomCard";
 
 const Rooms = () => {
-	let lodedRooms = useRooms();
+	let rooms = useRooms();
 	//const {rooms} = lodedRooms;
-	console.log(lodedRooms);
+	console.log(rooms);
 	const [maxPrice, setMaxPrice] = useState(500);
-	const filteredRoomsWithPrice = lodedRooms.filter(
+	const filteredRoomsWithPrice = rooms.filter(
 		(room) => room.rooms.price <= maxPrice
 	);
 	//rooms by price in ascending order
@@ -34,7 +34,7 @@ const Rooms = () => {
 							<p className="text-sm font-jost text-sm">
 								CHECK OUR ACCOMODATIONS{" "}
 							</p>
-							<h2 className="text-6xl font-bold font-mercellus ">
+							<h2 className="text-6xl font-bold font-mercellus">
 								Rooms, Suites & Chalets
 							</h2>
 						</div>
