@@ -12,10 +12,10 @@ const MyBookings = () => {
     const [myBookings,setMyBookings] = useState([]);
    // const checkOutDate = myBookings.checkOut;
 
-    const canDeleteBooking = (checkOutDate) => { 
-        const checkOutMoment = moment(checkOutDate);
+    const canDeleteBooking = (checkInDate) => { 
+        const checkInMoment = moment(checkInDate);
         const now = moment();
-        const hoursDifference = checkOutMoment.diff(now,'hours');
+        const hoursDifference = checkInMoment.diff(now,'hours');
         return hoursDifference>=24;
     }
    
@@ -26,8 +26,8 @@ const MyBookings = () => {
     }, [email]);
     console.log(myBookings);
 
-    const handleDelete = (_id,checkOutDate) => {
-		if(canDeleteBooking(checkOutDate)) {
+    const handleDelete = (_id,checkInDate) => {
+		if(canDeleteBooking(checkInDate)) {
             // make sure user confirm to delete
 		Swal.fire({
 			title: "Are you sure?",
@@ -55,7 +55,7 @@ const MyBookings = () => {
 								"success"
 							);
 							const remaining = myBookings.filter(
-								(cart) => cart._id !== id
+								(cart) => cart._id !== _id
 							);
 							setMyBookings(remaining);
 						}
@@ -84,21 +84,22 @@ const MyBookings = () => {
 								{/* <th>Email</th> */}
 								<th>Name</th>
 								<th>Price</th>
+								<th>date</th>
 							</tr>
 						</thead>
 						<tbody>
 							{/* row 1 */}
-							{myBookings.map((user, index) => (
+							{ myBookings.map((user, index) => (
 								<tr key={user._id}>
 									<th>{index + 1}</th>
 									{/* <td>{user.email}</td> */}
-									<td>{user.name}</td>
+									<td>{user.email}</td>
 									<td>{user.price}</td>
-                                    <td>{user.checkOut}</td>
+                                    <td>{user.checkIn}</td>
 									<td>
 										<button
 											onClick={() =>
-												handleDelete(user._id,user.checkOut)
+												handleDelete(user._id,user.checkIn)
 											}
 											className="btn">
 											X
