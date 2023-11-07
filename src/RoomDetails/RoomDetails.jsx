@@ -24,10 +24,45 @@ const RoomDetails = () => {
 	//const [numOfRoom, setNumOfRooms] = useState(room);
 	const [priceof, setPriceOf] = useState(price);
 	console.log(roomCount);
-	//const formRef = useRef(null); // Create a ref for the form
+	const checkInMoment = moment(checkInDate);
+	const checkOutMoment = moment(checkOutDate);
+	const duration = moment.duration(checkOutMoment.diff(checkInMoment));
+	const nights = duration.asDays();
+	console.log(nights);
 
 	console.log(roomDetails.rooms.room_images);
 	const roomImages = roomDetails.rooms.room_images;
+
+	const handleCheckInDateChange = (e) => {
+		const selectedDate = e.target.value;
+
+		if (moment(selectedDate).isValid()) {
+			setCheckInDate(selectedDate);
+
+			const minCheckOutDate = moment(selectedDate)
+				.add(1, "days")
+				.format("YYYY-MM-DD");
+
+			if (moment(checkOutDate).isBefore(minCheckOutDate)) {
+				setCheckOutDate(minCheckOutDate);
+			}
+		}
+	};
+	const handleCheckOutDateChange = (e) => {
+		const selectedDate = e.target.value;
+
+		if (moment(selectedDate).isValid()) {
+			setCheckOutDate(selectedDate);
+
+			const minCheckOutDate = moment(checkInDate)
+				.add(1, "days")
+				.format("YYYY-MM-DD");
+
+			if (moment(selectedDate).isBefore(minCheckOutDate)) {
+				setCheckOutDate(minCheckOutDate);
+			}
+		}
+	};
 
 	const handleConfirmBooking = (e) => {
 		e.preventDefault();
@@ -72,8 +107,6 @@ const RoomDetails = () => {
 				.then((res) => res.json())
 				.then((data) => {
 					if (data.insertedId) {
-						
-
 						// Decrease the available room count and reset the form
 						const roomDecre = roomCount - roomNumber;
 						setRoomCount(roomDecre);
@@ -108,15 +141,6 @@ const RoomDetails = () => {
 			confirmButtonText: "Confirmed",
 		});
 	};
-	// const handleBookNow = () => {
-	// 	// Check if there are any selected dates
-	// 	handleConfirmBooking();
-	// };
-	//     ● Room Description
-	// ● Price per Night
-	// ● Room Size
-	// ● Availability
-	// ● Room Images
 
 	return (
 		<div>
@@ -192,6 +216,8 @@ const RoomDetails = () => {
 											name="Check_in_Date"
 											placeholder="Check in Date"
 											className="input input-bordered w-full"
+											value={checkInDate}
+											onChange={handleCheckInDateChange}
 										/>
 									</label>
 								</div>
@@ -207,6 +233,8 @@ const RoomDetails = () => {
 											name="check_out_date"
 											placeholder="Check out Date"
 											className="input input-bordered w-full"
+											value={checkOutDate}
+											onChange={handleCheckOutDateChange}
 										/>
 									</label>
 								</div>
@@ -299,11 +327,17 @@ const RoomDetails = () => {
 									<dialog id="my_modal_1" className="modal">
 										<div className="modal-box">
 											<h3 className="font-bold text-lg">
-												Name :{" "}
+												Name :
 												{roomDetails.category_name}
 											</h3>
 											<p className="py-4">
-												{" "}
+												Check-In-Date : {checkInDate}
+											</p>
+											<p className="py-4">
+												Check-Out-Date: {checkOutDate}
+											</p>
+
+											<p className="py-4">
 												Price : {priceof}
 											</p>
 											<div className="modal-action">
