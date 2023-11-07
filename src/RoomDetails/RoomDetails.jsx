@@ -4,27 +4,37 @@ import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import moment from "moment";
+import useBookings from "../hooks/useBookings";
 
 const RoomDetails = () => {
+	// for getting user email
 	const { user } = useAuth();
 	const email = user.email;
 
+	// roomDetails by id from loader
 	const roomDetails = useLoaderData();
 	console.log(roomDetails);
+	// existing bookings data from database
+	const existingBookings = useBookings();
+	console.log(existingBookings);
+
 	//const[newRoomNumber,setNewRoomNumber] = useState(room);
 	let room = roomDetails.rooms.room_number;
 	let price = roomDetails.rooms.price;
-
+	const [isRoomAvailable, setIsRoomAvailable] = useState(true);
+	const [availabilityError, setAvailabilityError] = useState("");
 	console.log(room);
 
 	const [roomCount, setRoomCount] = useState(room);
-	const [userRoomCount,setUserRoomCount] = useState(0);
+	const [userRoomCount, setUserRoomCount] = useState(0);
 	//const [showModal, setShowModal] = useState(false);
 	const [checkInDate, setCheckInDate] = useState("");
 	const [checkOutDate, setCheckOutDate] = useState("");
 	//const [numOfRoom, setNumOfRooms] = useState(room);
 	const [priceof, setPriceOf] = useState(price);
 	console.log(roomCount);
+
+	// momentjs for date picking and for caluculating date duration
 	const checkInMoment = moment(checkInDate);
 	const checkOutMoment = moment(checkOutDate);
 	const duration = moment.duration(checkOutMoment.diff(checkInMoment));
@@ -34,6 +44,7 @@ const RoomDetails = () => {
 	console.log(roomDetails.rooms.room_images);
 	const roomImages = roomDetails.rooms.room_images;
 
+	// handler for checkIndate
 	const handleCheckInDateChange = (e) => {
 		const selectedDate = e.target.value;
 
@@ -43,12 +54,37 @@ const RoomDetails = () => {
 			const minCheckOutDate = moment(selectedDate)
 				.add(1, "days")
 				.format("YYYY-MM-DD");
+			setCheckOutDate(minCheckOutDate);
 
-			if (moment(checkOutDate).isBefore(minCheckOutDate)) {
-				setCheckOutDate(minCheckOutDate);
+			// if (moment(checkOutDate).isBefore(minCheckOutDate)) {
+			// 	setCheckOutDate(minCheckOutDate);
+			// }
+
+			// Check room availability
+			const selectedCheckIn = moment(selectedDate);
+			const selectedCheckOut = moment(minCheckOutDate);
+
+			const isAvailable = existingBookings.every((booking) => {
+				const bookingCheckIn = moment(booking.checkIn);
+				const bookingCheckOut = moment(booking.checkOut);
+				return (
+					selectedCheckIn.isAfter(bookingCheckOut) ||
+					selectedCheckOut.isBefore(bookingCheckIn)
+				);
+			});
+			console.log(isAvailable);
+
+			setIsRoomAvailable(isAvailable);
+			if (!isAvailable) {
+				setAvailabilityError(
+					"No available rooms for the selected date range."
+				);
+			} else {
+				setAvailabilityError("");
 			}
 		}
 	};
+	// handler for checkOutdate
 	const handleCheckOutDateChange = (e) => {
 		const selectedDate = e.target.value;
 
@@ -62,9 +98,32 @@ const RoomDetails = () => {
 			if (moment(selectedDate).isBefore(minCheckOutDate)) {
 				setCheckOutDate(minCheckOutDate);
 			}
+
+			// Check room availability 
+			const selectedCheckIn = moment(checkInDate);
+			const selectedCheckOut = moment(selectedDate);
+
+			const isAvailable = existingBookings.every((booking) => {
+				const bookingCheckIn = moment(booking.checkIn);
+				const bookingCheckOut = moment(booking.checkOut);
+				return (
+					selectedCheckIn.isAfter(bookingCheckOut) ||
+					selectedCheckOut.isBefore(bookingCheckIn)
+				);
+			});
+
+			setIsRoomAvailable(isAvailable);
+			if (!isAvailable) {
+				setAvailabilityError(
+					"No available rooms for the selected date range."
+				);
+			} else {
+				setAvailabilityError("");
+			}
 		}
 	};
 
+	// booking posting to server
 	const handleConfirmBooking = (e) => {
 		e.preventDefault();
 		// Handle the booking information here (e.g., send it to the server).
@@ -86,7 +145,7 @@ const RoomDetails = () => {
 			const room_number = form.rooms.value;
 			const category_name = form.name.value;
 			const price = form.price.value;
-             setUserRoomCount(room_number);
+			setUserRoomCount(room_number);
 			const newBooking = {
 				email,
 
@@ -109,12 +168,12 @@ const RoomDetails = () => {
 				.then((data) => {
 					if (data.insertedId) {
 						// Decrease the available room count and reset the form
-						
+
 						console.log(roomCount);
 						setCheckInDate(checkIn);
 						setCheckOutDate(checkOut);
 						setPriceOf(price);
-                        //  form.current.reset();
+						//  form.current.reset();
 						// Successfully added to bookings
 						Swal.fire({
 							title: "Success!",
@@ -138,13 +197,14 @@ const RoomDetails = () => {
 			});
 		}
 	};
+	// confirming with modal
 	const handleConfirmButtonClick = () => {
 		// Manually submit the form
 		const form = document.getElementById("bookingForm");
 		form.submit();
 		const roomDecre = roomCount - userRoomCount;
-						console.log(roomDecre)
-						setRoomCount(roomDecre);
+		console.log(roomDecre);
+		setRoomCount(roomDecre);
 	};
 
 	return (
@@ -275,16 +335,16 @@ const RoomDetails = () => {
 										<input
 											type="text"
 											name="rooms"
-											placeholder={`Available room ${roomCount}`}
+											placeholder="Total Room"
 											required
 											className="input input-bordered w-full"
 										/>
-										{roomCount == 0 && (
+										{/* {!isRoomAvailable && (
 											<p className="text-red-400 font-medium pl-2">
 												{" "}
 												No Available Room
 											</p>
-										)}
+										)} */}
 									</label>
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
@@ -342,7 +402,9 @@ const RoomDetails = () => {
 
 								<div className="text-center">
 									<button
-										disabled={roomCount <= 0}
+										disabled={
+											!isRoomAvailable
+										}
 										// onClick={openModal}
 										onClick={() =>
 											document
@@ -352,6 +414,11 @@ const RoomDetails = () => {
 										className="btn bg-[#20292e] text-[#c5c4c4]  md:w-1/2 text-center border-0">
 										Book Now
 									</button>
+									{!isRoomAvailable && (
+										<p className="text-red-400 font-medium pl-2">
+											{availabilityError}
+										</p>
+									)}
 									<dialog id="my_modal_1" className="modal">
 										<div className="modal-box">
 											<h3 className="font-bold text-lg">
