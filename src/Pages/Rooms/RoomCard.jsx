@@ -44,7 +44,7 @@ const RoomCard = ({ room }) => {
 							</div>
 						</div>
 					</div>
-					<p>Available Rooms: {rooms.room_number}</p>
+					{/* <p>Available Rooms: {rooms.room_number}</p> */}
 					<div className="flex flex-row gap-3">
 						<p>{rooms.room_size}</p>
 						<p>{rooms.guest} Guests </p>

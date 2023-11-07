@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import moment from "moment";
@@ -8,41 +8,60 @@ import moment from "moment";
 const RoomDetails = () => {
 	const { user } = useAuth();
 	const email = user.email;
+
 	const roomDetails = useLoaderData();
+	console.log(roomDetails);
+	//const[newRoomNumber,setNewRoomNumber] = useState(room);
 	let room = roomDetails.rooms.room_number;
+	let price = roomDetails.rooms.price;
+
 	console.log(room);
+
 	const [roomCount, setRoomCount] = useState(room);
+	//const [showModal, setShowModal] = useState(false);
+	const [checkInDate, setCheckInDate] = useState("");
+	const [checkOutDate, setCheckOutDate] = useState("");
+	//const [numOfRoom, setNumOfRooms] = useState(room);
+	const [priceof, setPriceOf] = useState(price);
+	console.log(roomCount);
 	//const formRef = useRef(null); // Create a ref for the form
 
 	console.log(roomDetails.rooms.room_images);
 	const roomImages = roomDetails.rooms.room_images;
 
-	const handleBookNow = (e) => {
-		if (roomCount > 0) {
-			e.preventDefault();
+	const handleConfirmBooking = (e) => {
+		e.preventDefault();
+		// Handle the booking information here (e.g., send it to the server).
+		console.log("Check-in Date:", checkInDate);
+		console.log("Check-out Date:", checkOutDate);
 
+		// Retrieve the booking information
+
+		const roomNumber = roomCount;
+
+		// Check if there are available rooms
+		if (roomNumber > 0) {
+			//const today = moment().calendar();
+			//const name = user.name; // Replace this with the actual name source
 			const form = e.target;
-			const today = moment().calendar();
+			//const today = moment().calendar();
 			const checkIn = form.Check_in_Date.value;
 			const checkOut = form.check_out_date.value;
 			const rooms = form.rooms.value;
-
 			const name = form.name.value;
-
 			const price = form.price.value;
 
 			const newBooking = {
 				email,
-				today,
+
 				name,
 				checkIn,
 				checkOut,
 				rooms,
-
 				price,
 			};
 
-			// send data to the server
+			// Send data to the server
 			fetch("http://localhost:3000/bookings", {
 				method: "POST",
 				headers: {
@@ -52,33 +71,47 @@ const RoomDetails = () => {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					console.log(data);
 					if (data.insertedId) {
-						Swal.fire({
-							title: "Success!",
-							text: "Successfully Added in th Bookings",
-							icon: "success",
-							confirmButtonText: "Confirmed",
-						});
-						const roomDecre = roomCount - rooms;
+						
+
+						// Decrease the available room count and reset the form
+						const roomDecre = roomCount - roomNumber;
 						setRoomCount(roomDecre);
-						// Reset the form
-						form.reset();
+						setCheckInDate(checkIn);
+						setCheckOutDate(checkOut);
+						setPriceOf(price);
 					} else {
+						// Failed to add to bookings
 						Swal.fire({
 							title: "Error!",
 							text: "Failed To Add In The Bookings",
 						});
 					}
 				});
-			//setRoomCount(e);
 		} else {
+			// No available rooms
 			Swal.fire({
 				title: "Oops...",
 				text: "No available Rooms!",
 			});
 		}
 	};
+	const handleConfirmButtonClick = () => {
+		// Manually submit the form
+		const form = document.getElementById("bookingForm");
+		form.submit();
+		// Successfully added to bookings
+		Swal.fire({
+			title: "Success!",
+			text: "Successfully Added in the Bookings",
+			icon: "success",
+			confirmButtonText: "Confirmed",
+		});
+	};
+	// const handleBookNow = () => {
+	// 	// Check if there are any selected dates
+	// 	handleConfirmBooking();
+	// };
 	//     ● Room Description
 	// ● Price per Night
 	// ● Room Size
@@ -144,7 +177,7 @@ const RoomDetails = () => {
 						</div>
 					</div>
 					<div>
-						<form onSubmit={handleBookNow}>
+						<form onSubmit={handleConfirmBooking} id="bookingForm">
 							{/* form row */}
 							<div className="mb-8 mt-5">
 								<div className="form-control md:w-1/2 mx-auto mb-2">
@@ -190,7 +223,12 @@ const RoomDetails = () => {
 											placeholder={`Available room ${roomCount}`}
 											className="input input-bordered w-full"
 										/>
-                                        { roomCount == 0 && <p className="text-red-400 font-medium"> No Available Room</p>}
+										{roomCount == 0 && (
+											<p className="text-red-400 font-medium pl-2">
+												{" "}
+												No Available Room
+											</p>
+										)}
 									</label>
 								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
@@ -236,6 +274,7 @@ const RoomDetails = () => {
 											<input
 												type="text"
 												name="price"
+												disabled
 												defaultValue={
 													roomDetails.rooms.price
 												}
@@ -246,13 +285,41 @@ const RoomDetails = () => {
 								</div>
 
 								<div className="text-center">
-									<input
-										type="submit"
-										value="Book Now"
-                                        disabled={roomCount <= 0}
-										className="btn bg-[#20292e] text-[#c5c4c4]  md:w-1/2 text-center border-0"
-									/>
-									
+									<button
+										disabled={roomCount <= 0}
+										// onClick={openModal}
+										onClick={() =>
+											document
+												.getElementById("my_modal_1")
+												.showModal()
+										}
+										className="btn bg-[#20292e] text-[#c5c4c4]  md:w-1/2 text-center border-0">
+										Book Now
+									</button>
+									<dialog id="my_modal_1" className="modal">
+										<div className="modal-box">
+											<h3 className="font-bold text-lg">
+												Name :{" "}
+												{roomDetails.category_name}
+											</h3>
+											<p className="py-4">
+												{" "}
+												Price : {priceof}
+											</p>
+											<div className="modal-action">
+												<form method="dialog">
+													{/* if there is a button in form, it will confirm the modal */}
+													<button
+														className="btn"
+														onClick={
+															handleConfirmButtonClick
+														}>
+														Confirm
+													</button>
+												</form>
+											</div>
+										</div>
+									</dialog>
 								</div>
 							</div>
 						</form>

@@ -9,45 +9,44 @@ import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoutes from "./PrivateRoutes";
 import RoomDetails from "../RoomDetails/RoomDetails";
 
-
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element : <Root></Root>,
-        errorElement : <ErrorPage></ErrorPage>,
-        children : [
-            {
-                path : '/',
-                element: <Home></Home>
-            },
-            {
-                path : '/rooms',
-                element: <Rooms></Rooms>
-            },
-            {
-                path : '/myBookings',
-                element: <MyBookings></MyBookings>
-            },
-            {
-                path : '/login',
-                element:<Login></Login>
-            },
-            {
-                path : '/signup',
-                element:<SignUp></SignUp>
-            },
-            {
-                path : '/:id',
-                element : (
-                    <PrivateRoutes>
-                        <RoomDetails></RoomDetails>
-                    </PrivateRoutes>
-                ),
-                loader:({params}) => fetch (`http://localhost:3000/room/${params.id}`),
-            },
-        ],
-    },
-
+	{
+		path: "/",
+		element: <Root></Root>,
+		errorElement: <ErrorPage></ErrorPage>,
+		children: [
+			{
+				path: "/",
+				element: <Home></Home>,
+			},
+			{
+				path: "/rooms",
+				element: <Rooms></Rooms>,
+			},
+			{
+				path: "/myBookings",
+				element: <MyBookings></MyBookings>,
+			},
+			{
+				path: "/login",
+				element: <Login></Login>,
+			},
+			{
+				path: "/signup",
+				element: <SignUp></SignUp>,
+			},
+			{
+				path: "/:id",
+				element: (
+					<PrivateRoutes>
+						<RoomDetails></RoomDetails>
+					</PrivateRoutes>
+				),
+				loader: ({ params }) =>
+					fetch(`http://localhost:3000/room/${params.id}`),
+			},
+		],
+	},
 ]);
 
 export default router;
