@@ -50,12 +50,13 @@ const MyBookings = () => {
 									"Item has removed from the Booking",
 									"success"
 								);
-								const remaining = myBookings.filter(
-									(cart) => cart._id !== _id
-								);
-								setMyBookings(remaining);
-                                console.log(myBookings);
+								
 							}
+                            const remaining = myBookings.filter(
+                                (cart) => cart._id !== _id
+                            );
+                            setMyBookings(remaining);
+                            console.log(myBookings);
 						});
 				}
 			});
