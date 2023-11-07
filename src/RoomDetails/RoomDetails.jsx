@@ -18,6 +18,7 @@ const RoomDetails = () => {
 	console.log(room);
 
 	const [roomCount, setRoomCount] = useState(room);
+	const [userRoomCount,setUserRoomCount] = useState(0);
 	//const [showModal, setShowModal] = useState(false);
 	const [checkInDate, setCheckInDate] = useState("");
 	const [checkOutDate, setCheckOutDate] = useState("");
@@ -82,17 +83,17 @@ const RoomDetails = () => {
 			//const today = moment().calendar();
 			const checkIn = form.Check_in_Date.value;
 			const checkOut = form.check_out_date.value;
-			const rooms = form.rooms.value;
-			const name = form.name.value;
+			const room_number = form.rooms.value;
+			const category_name = form.name.value;
 			const price = form.price.value;
-
+             setUserRoomCount(room_number);
 			const newBooking = {
 				email,
 
-				name,
+				category_name,
 				checkIn,
 				checkOut,
-				rooms,
+				room_number,
 				price,
 			};
 
@@ -108,11 +109,19 @@ const RoomDetails = () => {
 				.then((data) => {
 					if (data.insertedId) {
 						// Decrease the available room count and reset the form
-						const roomDecre = roomCount - roomNumber;
-						setRoomCount(roomDecre);
+						
+						console.log(roomCount);
 						setCheckInDate(checkIn);
 						setCheckOutDate(checkOut);
 						setPriceOf(price);
+                        //  form.current.reset();
+						// Successfully added to bookings
+						Swal.fire({
+							title: "Success!",
+							text: "Successfully Added in the Bookings",
+							icon: "success",
+							confirmButtonText: "Confirmed",
+						});
 					} else {
 						// Failed to add to bookings
 						Swal.fire({
@@ -133,13 +142,9 @@ const RoomDetails = () => {
 		// Manually submit the form
 		const form = document.getElementById("bookingForm");
 		form.submit();
-		// Successfully added to bookings
-		Swal.fire({
-			title: "Success!",
-			text: "Successfully Added in the Bookings",
-			icon: "success",
-			confirmButtonText: "Confirmed",
-		});
+		const roomDecre = roomCount - userRoomCount;
+						console.log(roomDecre)
+						setRoomCount(roomDecre);
 	};
 
 	return (
@@ -204,6 +209,26 @@ const RoomDetails = () => {
 						<form onSubmit={handleConfirmBooking} id="bookingForm">
 							{/* form row */}
 							<div className="mb-8 mt-5">
+								<div className=" mb-8">
+									<div className="form-control md:w-1/2 mx-auto mb-2">
+										<label className="label">
+											<span className="label-text ">
+												Category
+											</span>
+										</label>
+										<label className="input-group">
+											<input
+												type="text"
+												name="name"
+												disabled
+												defaultValue={
+													roomDetails.category_name
+												}
+												className="input input-bordered w-full"
+											/>
+										</label>
+									</div>
+								</div>
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
 										<span className="label-text ">
@@ -218,6 +243,7 @@ const RoomDetails = () => {
 											className="input input-bordered w-full"
 											value={checkInDate}
 											onChange={handleCheckInDateChange}
+											required
 										/>
 									</label>
 								</div>
@@ -235,6 +261,7 @@ const RoomDetails = () => {
 											className="input input-bordered w-full"
 											value={checkOutDate}
 											onChange={handleCheckOutDateChange}
+											required
 										/>
 									</label>
 								</div>
@@ -249,6 +276,7 @@ const RoomDetails = () => {
 											type="text"
 											name="rooms"
 											placeholder={`Available room ${roomCount}`}
+											required
 											className="input input-bordered w-full"
 										/>
 										{roomCount == 0 && (
