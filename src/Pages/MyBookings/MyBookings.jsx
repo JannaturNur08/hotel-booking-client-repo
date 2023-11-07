@@ -9,7 +9,10 @@ const MyBookings = () => {
 	console.log(user);
 	const email = user.email;
 	const [myBookings, setMyBookings] = useState([]);
-	// const checkOutDate = myBookings.checkOut;
+	const { _id, category_name, checkIn } = myBookings;
+	//const checkIn = myBookings.checkIn;
+	const [newCheckInDate, setNewCheckInDate] = useState(checkIn);
+	console.log(newCheckInDate);
 
 	const canDeleteBooking = (checkInDate) => {
 		const checkInMoment = moment(checkInDate);
@@ -50,13 +53,12 @@ const MyBookings = () => {
 									"Item has removed from the Booking",
 									"success"
 								);
-								
 							}
-                            const remaining = myBookings.filter(
-                                (cart) => cart._id !== _id
-                            );
-                            setMyBookings(remaining);
-                            console.log(myBookings);
+							const remaining = myBookings.filter(
+								(cart) => cart._id !== _id
+							);
+							setMyBookings(remaining);
+							console.log(myBookings);
 						});
 				}
 			});
@@ -68,10 +70,60 @@ const MyBookings = () => {
 			});
 		}
 	};
+	const handleUpdateDate = (e) => {
+		//e.preventDefault();
+		const form = e.target;
+		const checkIn = form.Check_in_Date.value;
+		//const category_name = myBookings.category_name;
+		const updatedData = {
+			category_name,
+			checkIn,
+		};
+		fetch(`http://localhost:3000/bookings/${_id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updatedData),
+		})
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error("Failed to update booking");
+				}
+				return res.json();
+			})
+			.then((data) => {
+				// Debugging: log the data received from the server
+				console.log(data);
+
+				if (data && data.checkIn) {
+					// Update your UI with the new check-in date
+					setNewCheckInDate(data.checkIn);
+
+					// Successfully updated booking
+					Swal.fire({
+						title: "Success!",
+						text: "Successfully updated the booking",
+						icon: "success",
+						confirmButtonText: "Confirmed",
+					});
+				} else {
+					// Failed to update booking
+					Swal.fire({
+						title: "Error!",
+						text: "Failed to update the booking",
+					});
+				}
+			})
+			.catch((error) => {
+				// Handle network errors or server errors here
+				console.error("An error occurred:", error);
+			});
+	};
 	return (
 		<div>
 			<h2>My bookings page</h2>
-			<div className="mx-auto container mt-10 mb-10">
+			<div className="mx-auto container mt-10 mb-10 lg:w-1/2">
 				<div>
 					<table className=" table ">
 						{/* head */}
@@ -79,9 +131,13 @@ const MyBookings = () => {
 							<tr>
 								<th>Index</th>
 								{/* <th>Email</th> */}
-								<th>Name</th>
+								<th>Category Name</th>
+								<th>Email</th>
 								<th>Price</th>
-								<th>date</th>
+								<th>Date</th>
+								<th>Cancel</th>
+								<th>Update Date</th>
+								<th>Review</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -90,6 +146,7 @@ const MyBookings = () => {
 								<tr key={user._id}>
 									<th>{index + 1}</th>
 									{/* <td>{user.email}</td> */}
+									<td>{user.category_name}</td>
 									<td>{user.email}</td>
 									<td>{user.price}</td>
 									<td>{user.checkIn}</td>
@@ -104,6 +161,22 @@ const MyBookings = () => {
 											className="btn">
 											X
 										</button>
+									</td>
+									<td>
+										<form onSubmit={handleUpdateDate}>
+											<label className="input-group">
+												<input
+													type="date"
+													name="Check_in_Date"
+													className="input input-bordered w-full"
+													value={newCheckInDate}
+													onChange={handleUpdateDate}
+												/>
+											</label>
+										</form>
+									</td>
+									<td>
+										<button className="btn">Review</button>
 									</td>
 								</tr>
 							))}
