@@ -85,43 +85,43 @@ const RoomDetails = () => {
 		}
 	};
 	// handler for checkOutdate
-	const handleCheckOutDateChange = (e) => {
-		const selectedDate = e.target.value;
+	// const handleCheckOutDateChange = (e) => {
+	// 	const selectedDate = e.target.value;
 
-		if (moment(selectedDate).isValid()) {
-			setCheckOutDate(selectedDate);
+	// 	if (moment(selectedDate).isValid()) {
+	// 		setCheckOutDate(selectedDate);
 
-			const minCheckOutDate = moment(checkInDate)
-				.add(1, "days")
-				.format("YYYY-MM-DD");
+	// 		const minCheckOutDate = moment(checkInDate)
+	// 			.add(1, "days")
+	// 			.format("YYYY-MM-DD");
 
-			if (moment(selectedDate).isBefore(minCheckOutDate)) {
-				setCheckOutDate(minCheckOutDate);
-			}
+	// 		if (moment(selectedDate).isBefore(minCheckOutDate)) {
+	// 			setCheckOutDate(minCheckOutDate);
+	// 		}
 
-			// Check room availability 
-			const selectedCheckIn = moment(checkInDate);
-			const selectedCheckOut = moment(selectedDate);
+	// 		// Check room availability 
+	// 		const selectedCheckIn = moment(checkInDate);
+	// 		const selectedCheckOut = moment(selectedDate);
 
-			const isAvailable = existingBookings.every((booking) => {
-				const bookingCheckIn = moment(booking.checkIn);
-				const bookingCheckOut = moment(booking.checkOut);
-				return (
-					selectedCheckIn.isAfter(bookingCheckOut) ||
-					selectedCheckOut.isBefore(bookingCheckIn)
-				);
-			});
+	// 		const isAvailable = existingBookings.every((booking) => {
+	// 			const bookingCheckIn = moment(booking.checkIn);
+	// 			const bookingCheckOut = moment(booking.checkOut);
+	// 			return (
+	// 				selectedCheckIn.isAfter(bookingCheckOut) ||
+	// 				selectedCheckOut.isBefore(bookingCheckIn)
+	// 			);
+	// 		});
 
-			setIsRoomAvailable(isAvailable);
-			if (!isAvailable) {
-				setAvailabilityError(
-					"No available rooms for the selected date range."
-				);
-			} else {
-				setAvailabilityError("");
-			}
-		}
-	};
+	// 		setIsRoomAvailable(isAvailable);
+	// 		if (!isAvailable) {
+	// 			setAvailabilityError(
+	// 				"No available rooms for the selected date range."
+	// 			);
+	// 		} else {
+	// 			setAvailabilityError("");
+	// 		}
+	// 	}
+	// };
 
 	// booking posting to server
 	const handleConfirmBooking = (e) => {
@@ -307,7 +307,7 @@ const RoomDetails = () => {
 										/>
 									</label>
 								</div>
-								<div className="form-control md:w-1/2 mx-auto mb-2">
+								{/* <div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
 										<span className="label-text ">
 											Check Out
@@ -324,7 +324,7 @@ const RoomDetails = () => {
 											required
 										/>
 									</label>
-								</div>
+								</div> */}
 								<div className="form-control md:w-1/2 mx-auto mb-2">
 									<label className="label">
 										<span className="label-text ">
@@ -335,7 +335,7 @@ const RoomDetails = () => {
 										<input
 											type="text"
 											name="rooms"
-											placeholder="Total Room"
+											placeholder={`Available Rooms ${roomCount}`}
 											required
 											className="input input-bordered w-full"
 										/>

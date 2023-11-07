@@ -9,7 +9,7 @@ const MyBookings = () => {
 	console.log(user);
 	const email = user.email;
 	const [myBookings, setMyBookings] = useState([]);
-	const { _id, category_name, checkIn } = myBookings;
+	const { _id,  checkIn } = myBookings;
 	//const checkIn = myBookings.checkIn;
 	const [newCheckInDate, setNewCheckInDate] = useState(checkIn);
 	console.log(newCheckInDate);
@@ -70,21 +70,24 @@ const MyBookings = () => {
 			});
 		}
 	};
-	const handleUpdateDate = (e) => {
+	const handleConfirmButton = () => {
 		//e.preventDefault();
-		const form = e.target;
-		const checkIn = form.Check_in_Date.value;
+		//const form = e.target;
+		const checkIn = document.querySelector('input[name="Check_in_Date"]').value;
+		setNewCheckInDate(checkIn);
+    
+		console.log(checkIn);
+		// const updatedDate = {
+		// 	checkIn, // Field name "checkIn" with the value
+		// };
 		//const category_name = myBookings.category_name;
-		const updatedData = {
-			category_name,
-			checkIn,
-		};
+		
 		fetch(`http://localhost:3000/bookings/${_id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(updatedData),
+			body: JSON.stringify({checkIn : checkIn}),
 		})
 			.then((res) => {
 				if (!res.ok) {
@@ -96,23 +99,14 @@ const MyBookings = () => {
 				// Debugging: log the data received from the server
 				console.log(data);
 
-				if (data && data.checkIn) {
-					// Update your UI with the new check-in date
-					setNewCheckInDate(data.checkIn);
-
-					// Successfully updated booking
+				if (data.message === "Date Updated successfully") {
 					Swal.fire({
 						title: "Success!",
-						text: "Successfully updated the booking",
+						text: "Updated  Date Successfully",
 						icon: "success",
 						confirmButtonText: "Confirmed",
 					});
-				} else {
-					// Failed to update booking
-					Swal.fire({
-						title: "Error!",
-						text: "Failed to update the booking",
-					});
+					setNewCheckInDate(checkIn);
 				}
 			})
 			.catch((error) => {
@@ -163,17 +157,39 @@ const MyBookings = () => {
 										</button>
 									</td>
 									<td>
-										<form onSubmit={handleUpdateDate}>
-											<label className="input-group">
-												<input
-													type="date"
-													name="Check_in_Date"
-													className="input input-bordered w-full"
-													value={newCheckInDate}
-													onChange={handleUpdateDate}
-												/>
-											</label>
-										</form>
+										<div>
+											<button
+												className="btn bg-primary text-white"
+												onClick={() =>
+													document
+														.getElementById(
+															"my_modal_1"
+														)
+														.showModal()
+												}>
+												Update Button
+											</button>
+											<dialog
+												id="my_modal_1"
+												className="modal">
+												<div className="modal-box">
+													<input
+														type="date"
+														name="Check_in_Date"
+														placeholder="Check in Date"
+														className="input input-bordered w-full"
+													/>
+													<div className="modal-action">
+														<form method="dialog" onSubmit={handleConfirmButton}>
+															{/* if there is a button in form, it will confirm the modal */}
+															<button className="btn" >
+																Confirm
+															</button>
+														</form>
+													</div>
+												</div>
+											</dialog>
+										</div>
 									</td>
 									<td>
 										<button className="btn">Review</button>
