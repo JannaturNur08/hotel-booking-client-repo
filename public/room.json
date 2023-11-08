@@ -1,8 +1,9 @@
 [
 	{
+		"_id": { "$oid": "641f1f77bcf86cd799440011" },
 		"category_name": "Standard Room",
 		"rooms": {
-			"room_number": 40,
+			"maxRooms": 10,
 			"room_size": "300 sq ft",
 			"check_in_date": "2023-11-15",
 			"check_out_date": "2023-11-20",
@@ -35,9 +36,10 @@
 		"description": "Our Standard Room offers a comfortable and affordable stay for travelers. The room is 300 square feet in size, perfect for two adults. It features a modern design with all the amenities you need for a pleasant stay. The room includes a queen-size bed, a private bathroom, and a small sitting area. You can enjoy a beautiful view from the window. The room is well-lit and furnished with elegant decor. Whether you're traveling for business or leisure, our Standard Room will provide you with a cozy and relaxing atmosphere."
 	},
 	{
+		"_id": { "$oid": "641f1f77bcf86cd799440013" },
 		"category_name": "Deluxe Suite",
 		"rooms": {
-			"room_number": 15,
+			"maxRooms": 10,
 			"room_size": "500 sq ft",
 			"check_in_date": "2023-11-15",
 			"check_out_date": "2023-11-20",
@@ -70,9 +72,10 @@
 		"description": "Indulge in luxury with our Deluxe Suite, a spacious 500-square-foot retreat. This suite is ideal for couples or small families with one child. The suite boasts a separate living area, a king-size bed, a private bathroom with a deep soaking tub, and a balcony with stunning views. The contemporary design and high-end furnishings make your stay comfortable and memorable. Enjoy the extra space and privacy in our Deluxe Suite, ensuring a relaxing and elegant experience."
 	},
 	{
+		"_id": { "$oid": "641f1f77bcf86cd799440012" },
 		"category_name": "Family Room",
 		"rooms": {
-			"room_number": 30,
+			"maxRooms": 10,
 			"room_size": "400 sq ft",
 			"check_in_date": "2023-11-15",
 			"check_out_date": "2023-11-20",
@@ -105,9 +108,10 @@
 		"description": "Our Family Room is designed to accommodate families of up to four, making it an excellent choice for your family vacation. This room is 400 square feet, providing ample space for both adults and children. It features two separate sleeping areas, one with a queen-size bed for parents and the other with two twin beds for the kids. The room is well-lit and decorated with family-friendly furnishings. The private bathroom is spacious and convenient. Enjoy a relaxing stay with your loved ones in our Family Room."
 	},
 	{
+		"_id": { "$oid": "641f1f77bcf86cd799440010" },
 		"category_name": "Executive Suite",
 		"rooms": {
-			"room_number": 10,
+			"maxRooms": 10,
 			"room_size": "600 sq ft",
 			"check_in_date": "2023-11-15",
 			"check_out_date": "2023-11-20",

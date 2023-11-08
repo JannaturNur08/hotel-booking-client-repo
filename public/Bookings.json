@@ -1,0 +1,19 @@
+[
+    {
+      "_id": {"$oid": "651f1f77bcf86cd799450011"},
+      "userId": {"$oid": "631f1f77bcf86cd799439011"},
+      "categoryId": {"$oid": "641f1f77bcf86cd799440011"},
+      "bookingDate": {"$date": "2023-11-15T00:00:00Z"},
+      "roomCount": 2,
+      "status": "Confirmed"
+    },
+    {
+      "_id": {"$oid": "651f1f77bcf86cd799450012"},
+      "userId": {"$oid": "631f1f77bcf86cd799439012"},
+      "categoryId": {"$oid": "641f1f77bcf86cd799440012"},
+      "bookingDate": {"$date": "2023-11-20T00:00:00Z"},
+      "roomCount": 1,
+      "status": "Confirmed"
+    }
+  ]
+  

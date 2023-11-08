@@ -17,7 +17,7 @@ const Login = () => {
 		signIn(email, password)
 			.then((result) => {
 				const loggedInUser = result.user;
-				navigate(location?.state ? location?.state : "/");
+				//navigate(location?.state ? location?.state : "/");
 
 				console.log(loggedInUser);
 
@@ -31,7 +31,7 @@ const Login = () => {
 					.then((res) => {
 						//console.log(res.data)
 						if (res.data.success) {
-							navigate(location?.state ? location?.state : "/");
+							navigate(location?.state?.from?.pathname || "/", { replace: true });
 						}
 					});
 			})

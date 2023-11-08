@@ -1,0 +1,42 @@
+[
+	{
+		"_id": { "$oid": "661f1f77bcf86cd799460011" },
+        "categoryId": {"$oid": "641f1f77bcf86cd799440011"},
+		"bookingId": { "$oid": "651f1f77bcf86cd799450016" },
+		"userId": { "$oid": "631f1f77bcf86cd799439011" },
+		"userName": "John",
+        "rating": 5,
+		"comment": "The room was excellent and the service was exceptional.",
+		"reviewDate": { "$date": "2023-11-16T00:00:00Z" }
+	},
+	{
+		"_id": { "$oid": "661f1f77bcf86cd799460012" },
+        "categoryId": {"$oid": "641f1f77bcf86cd799440011"},
+		"bookingId": { "$oid": "651f1f77bcf86cd799450010" },
+		"userId": { "$oid": "631f1f77bcf86cd799439011" },
+		"userName": "Johnu",
+        "rating": 4,
+		"comment": "The room was excellent and the service was exceptional.",
+		"reviewDate": { "$date": "2023-11-16T00:00:00Z" }
+	},
+	{
+		"_id": { "$oid": "661f1f77bcf86cd799460013" },
+        "categoryId": {"$oid": "641f1f77bcf86cd799440011"},
+		"bookingId": { "$oid": "651f1f77bcf86cd799450011" },
+		"userId": { "$oid": "631f1f77bcf86cd799439011" },
+		"userName": "Johnuuuq",
+        "rating": 3,
+		"comment": "The room was excellent and the service was exceptional.",
+		"reviewDate": { "$date": "2023-11-16T00:00:00Z" }
+	},
+	{
+		"_id": { "$oid": "661f1f77bcf86cd799460014" },
+        "categoryId": {"$oid": "641f1f77bcf86cd799440012"},
+		"bookingId": { "$oid": "651f1f77bcf86cd799450012" },
+		"userId": { "$oid": "631f1f77bcf86cd799439012" },
+		"userName": "Mary",
+        "rating": 4,
+		"comment": "Very comfortable room with great views. Will book again!",
+		"reviewDate": { "$date": "2023-11-21T00:00:00Z" }
+	}
+]

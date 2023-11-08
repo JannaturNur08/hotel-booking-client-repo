@@ -1,26 +1,39 @@
 import { Link } from "react-router-dom";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import useReviews from "../../hooks/useReviews";
+
 
 const RoomCard = ({ room }) => {
+	const reviews = useReviews(room._id);
+
 	const {
 		_id,
 		category_name,
 		rooms,
 		room_size,
 		price,
-		reviews,
+
 		room_images,
 	} = room;
 
+	const categoryId = room._id;
+
+	
+
+	console.log(categoryId);
+	console.log(reviews);
+
+	
 	// average rating from reviews
 	const totalReviewRating = reviews.reduce(
 		(total, review) => total + review.rating,
 		0
 	);
-	const avgRating = totalReviewRating / reviews.length;
+	const avgRating =
+		reviews.length > 0 ? totalReviewRating / reviews.length : 0;
 	console.log(avgRating);
-	const stars = Array(5).fill(null);
+	//	const stars = Array(5).fill(null);
 
 	return (
 		<div>
