@@ -30,8 +30,7 @@ const RoomCard = ({ room }) => {
 		(total, review) => total + review.rating,
 		0
 	);
-	const avgRating =
-		reviews.length > 0 ? totalReviewRating / reviews.length : 0;
+	const avgRating = reviews.length > 0 ? totalReviewRating / reviews.length : 0;
 	console.log(avgRating);
 	//	const stars = Array(5).fill(null);
 
@@ -46,7 +45,7 @@ const RoomCard = ({ room }) => {
 						</h2>
 
 						<div className="flex flex-row gap-2">
-							<p className="text-2xl">({avgRating})</p>
+							<p className="text-2xl">({avgRating.toFixed(1)})</p>
 							<div className="pt-1">
 								<Rating
 									style={{ maxWidth: 100 }}
