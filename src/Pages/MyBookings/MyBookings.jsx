@@ -159,7 +159,7 @@ const MyBookings = () => {
 									<td>
 										<div>
 											<button
-												className="btn bg-primary text-white"
+												className="btn bg-gray-600 text-white"
 												onClick={() =>
 													document
 														.getElementById(
@@ -167,7 +167,7 @@ const MyBookings = () => {
 														)
 														.showModal()
 												}>
-												Update Button
+												Update Date
 											</button>
 											<dialog
 												id="my_modal_1"
@@ -192,7 +192,7 @@ const MyBookings = () => {
 										</div>
 									</td>
 									<td>
-										<button className="btn">Review</button>
+										<button className="btn bg-slate-600 text-white">Review</button>
 									</td>
 								</tr>
 							))}
