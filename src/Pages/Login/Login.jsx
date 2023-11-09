@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 // import axios from "axios";
 
 const Login = () => {
@@ -36,16 +37,11 @@ const Login = () => {
 					.then((res) => {
 						//console.log(res.data)
 						if (res.data.success) {
-							toast.success("Successfully Logged in", {
-								position: "top-right",
-								autoClose: 5000,
-								hideProgressBar: false,
-								closeOnClick: true,
-								pauseOnHover: true,
-								draggable: true,
-								progress: undefined,
-								theme: "colored",
-								toastId: "login-id",
+							Swal.fire({
+								title: "Success!",
+								text: "logged in Successfully",
+								icon: "success",
+								confirmButtonText: "Confirmed",
 							});
 							navigate(location?.state?.from?.pathname || "/", { replace: true });
 						}

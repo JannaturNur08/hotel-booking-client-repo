@@ -32,7 +32,7 @@ const Rooms = () => {
 					/>
 					<div className="absolute  rounded-xl  h-full top-1/2 left-0 right-0 mx-auto">
 						<div className="text-white text-center">
-							<p className="text-sm font-jost text-sm">
+							<p className=" font-jost text-sm">
 								CHECK OUR ACCOMODATIONS{" "}
 							</p>
 							<h2 className="text-6xl font-bold font-mercellus"  data-aos="zoom-in">

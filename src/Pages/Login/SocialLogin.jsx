@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import {FcGoogle } from "react-icons/fc";
 
@@ -8,6 +9,12 @@ const SocialLogin = () => {
         googleSignIn()
             .then(result => {
                 console.log(result.user);
+                Swal.fire({
+					title: "Success!",
+					text: "logged in Successfully",
+					icon: "success",
+					confirmButtonText: "Confirmed",
+				});
             })
             .catch(error => console.log(error))
     }
