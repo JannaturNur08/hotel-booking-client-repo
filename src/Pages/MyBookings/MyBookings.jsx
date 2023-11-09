@@ -10,7 +10,7 @@ const MyBookings = () => {
 	const email = user.email;
 	//const userId = user.uid;
 	const [myBookings, setMyBookings] = useState([]);
-	const { _id,   bookingDate } = myBookings;
+	const { _id, bookingDate } = myBookings;
 	//const checkIn = myBookings.checkIn;
 	const [newCheckInDate, setNewCheckInDate] = useState(bookingDate);
 	console.log(newCheckInDate);
@@ -74,21 +74,23 @@ const MyBookings = () => {
 	const handleConfirmButton = (bookingId) => {
 		//e.preventDefault();
 		//const form = e.target;
-		const bookingDate = document.querySelector('input[name="Check_in_Date"]').value;
-		setNewCheckInDate(bookingDate);
-    
+		const bookingDate = document.querySelector(
+			'input[name="Check_in_Date"]'
+		).value;
+		//setNewCheckInDate(bookingDate);
+
 		//console.log(checkIn);
 		// const updatedDate = {
 		// 	checkIn, // Field name "checkIn" with the value
 		// };
 		//const category_name = myBookings.category_name;
-		
+
 		fetch(`http://localhost:3000/booking/${bookingId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({bookingDate : bookingDate}),
+			body: JSON.stringify({ bookingDate: bookingDate }),
 		})
 			.then((res) => {
 				if (!res.ok) {
@@ -101,13 +103,22 @@ const MyBookings = () => {
 				console.log(data);
 
 				if (data.message === "Date Updated successfully") {
+					const updatedMyBookings = myBookings.map((booking) => {
+						if (booking._id === bookingId) {
+							return { ...booking, bookingDate };
+						}
+						return booking;
+					});
+					setMyBookings(updatedMyBookings);
+					setNewCheckInDate(bookingDate);
+
 					Swal.fire({
 						title: "Success!",
 						text: "Updated  Date Successfully",
 						icon: "success",
 						confirmButtonText: "Confirmed",
 					});
-					setNewCheckInDate(bookingDate);
+					
 				}
 			})
 			.catch((error) => {
@@ -127,7 +138,7 @@ const MyBookings = () => {
 								<th>Index</th>
 								{/* <th>Email</th> */}
 								<th>Category Id</th>
-								
+
 								<th>Booking Date</th>
 								<th>Price</th>
 								<th>Cancel</th>
@@ -137,13 +148,12 @@ const MyBookings = () => {
 						</thead>
 						<tbody>
 							{/* row 1 */}
-							{myBookings.map((user, index) => (
+							{ myBookings.map((user, index) => (
 								<tr key={user._id}>
 									<th>{index + 1}</th>
 									{/* <td>{user.email}</td> */}
 									<td>{user.categoryId}</td>
-									
-									
+
 									<td>{user.bookingDate}</td>
 									<td>{user.price}</td>
 									<td>
@@ -179,13 +189,21 @@ const MyBookings = () => {
 														type="date"
 														name="Check_in_Date"
 														placeholder="Check in Date"
-														defaultValue={newCheckInDate}
+														
 														className="input input-bordered w-full"
 													/>
 													<div className="modal-action">
-														<form method="dialog"  onSubmit={() => handleConfirmButton(user._id)}>
+														<form
+															method="dialog"
+															onSubmit={() =>
+																handleConfirmButton(
+																	user._id
+																)
+															}>
 															{/* if there is a button in form, it will confirm the modal */}
-															<button className="btn" type="submit" >
+															<button
+																className="btn"
+																type="submit">
 																Confirm
 															</button>
 														</form>
@@ -195,7 +213,9 @@ const MyBookings = () => {
 										</div>
 									</td>
 									<td>
-										<button className="btn bg-slate-600 text-white">Review</button>
+										<button className="btn bg-slate-600 text-white">
+											Review
+										</button>
 									</td>
 								</tr>
 							))}

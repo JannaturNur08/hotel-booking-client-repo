@@ -25,7 +25,9 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/myBookings",
-				element: <MyBookings></MyBookings>,
+				element: <PrivateRoutes>
+					<MyBookings></MyBookings>
+				</PrivateRoutes>,
 			},
 			{
 				path: "/login",
