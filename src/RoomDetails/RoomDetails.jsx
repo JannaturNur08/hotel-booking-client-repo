@@ -6,24 +6,80 @@ import { useEffect, useState } from "react";
 import useReviews from "../hooks/useReviews";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import Swal from "sweetalert2";
 const RoomDetails = () => {
 	// for getting user email
 	const { user } = useAuth();
+	console.log(user);
 	const email = user.email;
+	const userId = user.uid;
 	console.log(email);
 	const roomDetails = useLoaderData();
 	const reviews = useReviews(roomDetails._id);
 	console.log(roomDetails);
 	const { _id, category_name, rooms, description } = roomDetails;
 	const roomImages = roomDetails.rooms.room_images;
+	const categoryId = roomDetails._id;
+	const totalRooms = roomDetails.rooms.maxRooms;
 
 	const [minCheckInDate, setMinCheckInDate] = useState("");
 	const [minCheckOutDate, setMinCheckOutDate] = useState("");
+	const [roomAvailability, setRoomAvailability] = useState({});
+	const [roomCount, setRoomCount] = useState(0);
+	const [bookingDate, setBookingDate] = useState("");
 
 	useEffect(() => {
 		const now = moment().format("YYYY-MM-DD");
 		setMinCheckInDate(now);
+		const initialRoomCount = roomAvailability[now] || totalRooms;
+		setRoomCount(initialRoomCount);
+		(async () => {
+			await fetchBookingsData();
+		})();
 	}, []);
+
+	const fetchBookingsData = async () => {
+		try {
+			const response = await fetch("http://localhost:3000/bookings");
+			const bookings = await response.json();
+			calculateRoomAvailability(bookings);
+		} catch (error) {
+			console.error("Error fetching bookings:", error);
+		}
+	};
+
+	const calculateRoomAvailability = (bookings) => {
+		//  available rooms by date
+		const availability = {};
+
+		//  default room count
+		for (const booking of bookings) {
+			const bookingDate = moment(booking.bookingDate).format(
+				"YYYY-MM-DD"
+			);
+			const checkoutDate = moment(bookingDate)
+				.add(1, "days")
+				.format("YYYY-MM-DD");
+
+			// Decrement the available room count for the booking date
+			availability[bookingDate] =
+				(availability[bookingDate] || totalRooms) - booking.roomCount;
+			// Increment the available room count for the day after checkout
+			availability[checkoutDate] =
+				(availability[checkoutDate] || totalRooms) +
+				parseInt(booking.roomCount);
+		}
+
+		// Ensure availability does not exceed totalRooms or go below 0
+		Object.keys(availability).forEach((date) => {
+			availability[date] = Math.min(
+				Math.max(availability[date], 0),
+				totalRooms
+			);
+		});
+
+		setRoomAvailability(availability);
+	};
 
 	const handleCheckInDateChange = async (e) => {
 		const selectedDate = e.target.value;
@@ -31,6 +87,80 @@ const RoomDetails = () => {
 			.add(1, "days")
 			.format("YYYY-MM-DD");
 		setMinCheckOutDate(CheckOutDate);
+
+		// Update available room count
+		const availableRoomsThatDay =
+			roomAvailability[selectedDate] || totalRooms;
+		setRoomCount(availableRoomsThatDay);
+	};
+
+	const handleBookingConfirm = async (e) => {
+		e.preventDefault();
+		const form = e.target;
+		const selectedBookingDate = form.Check_in_Date.value;
+		const selectedRoomCount = parseInt(form.userRoomCount.value, 10);
+		const price = rooms.price;
+		const newBooking = {
+			userId,
+			categoryId,
+			bookingDate: selectedBookingDate,
+			roomCount: selectedRoomCount,
+			price,
+		};
+
+		try {
+			const response = await fetch("http://localhost:3000/bookings", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newBooking),
+			});
+
+			const data = await response.json();
+			if (data.insertedId) {
+				Swal.fire({
+					title: "Success!",
+					text: "Room Booked Successfully",
+					icon: "success",
+					confirmButtonText: "Confirmed",
+				});
+				const remaining = totalRooms - roomCount;
+				setRoomCount(remaining);
+				form.reset();
+				setBookingDate(bookingDate);
+				updateRoomAvailabilityAfterBooking(
+					selectedBookingDate,
+					selectedRoomCount
+				);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+			Swal.fire({
+				title: "Error!",
+				text: "An error occurred while booking the room.",
+				icon: "error",
+				confirmButtonText: "OK",
+			});
+		}
+	};
+
+	const updateRoomAvailabilityAfterBooking = (bookingDate, roomCount) => {
+		const newRoomAvailability = { ...roomAvailability };
+		const formattedDate = moment(bookingDate).format("YYYY-MM-DD");
+		const checkoutDate = moment(formattedDate)
+			.add(1, "days")
+			.format("YYYY-MM-DD");
+
+		// Decrement available rooms for the booking date
+		newRoomAvailability[formattedDate] =
+			(newRoomAvailability[formattedDate] || totalRooms) - roomCount;
+		// Increment available rooms for the day after checkout
+		newRoomAvailability[checkoutDate] =
+			(newRoomAvailability[checkoutDate] || totalRooms) +
+			parseInt(roomCount);
+
+		return newRoomAvailability;
 	};
 
 	return (
@@ -98,17 +228,15 @@ const RoomDetails = () => {
 											</div>
 										</div>
 									</div>
-									
-									<p>{review.comment}</p>
 
-									
+									<p>{review.comment}</p>
 								</div>
 							))}
 						</div>
 					</div>
 					<div>
 						<div className="text-center mt-4"></div>
-						<form id="bookingForm">
+						<form id="bookingForm" onSubmit={handleBookingConfirm}>
 							{/* form row */}
 							<div className="mb-8 mt-5">
 								<div className=" mb-8">
@@ -174,45 +302,9 @@ const RoomDetails = () => {
 									<label className="input-group border-0">
 										<input
 											type="text"
-											name="userRoom"
-											placeholder={`Available Rooms ${rooms.maxRooms}`}
+											name="userRoomCount"
+											placeholder={`Available Rooms ${roomCount}`}
 											required
-											className="input input-bordered w-full"
-										/>
-										{/* {!isRoomAvailable && (
-											<p className="text-red-400 font-medium pl-2">
-												{" "}
-												No Available Room
-											</p>
-										)} */}
-									</label>
-								</div>
-								<div className="form-control md:w-1/2 mx-auto mb-2">
-									<label className="label">
-										<span className="label-text ">
-											Adults
-										</span>
-									</label>
-									<label className="input-group border-0">
-										<input
-											type="text"
-											name="adults"
-											placeholder="Adults"
-											className="input input-bordered w-full"
-										/>
-									</label>
-								</div>
-								<div className="form-control md:w-1/2 mx-auto mb-2">
-									<label className="label">
-										<span className="label-text ">
-											Children
-										</span>
-									</label>
-									<label className="input-group border-0">
-										<input
-											type="text"
-											name="children"
-											placeholder="Children"
 											className="input input-bordered w-full"
 										/>
 									</label>
@@ -241,34 +333,40 @@ const RoomDetails = () => {
 								<div className="text-center">
 									<button
 										// onClick={openModal}
-										// onClick={() =>
-										// 	document
-										// 		.getElementById("my_modal_1")
-										// 		.showModal()
-										// }
-
+										onClick={() =>
+											document
+												.getElementById("my_modal_1")
+												.showModal()
+										}
 										className="btn bg-[#20292e] text-[#c5c4c4]  md:w-1/2 text-center border-0">
 										Book Now
 									</button>
+									{roomCount == 0 && (
+										<p className="text-red-400 font-medium pl-2">
+											{" "}
+											No Available Room
+										</p>
+									)}
 
 									<dialog id="my_modal_1" className="modal">
 										<div className="modal-box">
-											<h3 className="font-bold text-lg">
-												Name :{category_name}
-											</h3>
+											<p className="py-4">{userId}</p>
+											<p className="py-4">{categoryId}</p>
 											<p className="py-4">
-												Check-In-Date :
+												Booking Date : {bookingDate}
 											</p>
 											<p className="py-4">
-												Check-Out-Date:{" "}
-												{minCheckOutDate}
+												Total Room Booked
+												{roomCount}
 											</p>
 
 											<p className="py-4">Price :</p>
 											<div className="modal-action">
 												<form method="dialog">
 													{/* if there is a button in form, it will confirm the modal */}
-													<button className="btn">
+													<button
+														className="btn"
+														type="submit">
 														Confirm
 													</button>
 												</form>
