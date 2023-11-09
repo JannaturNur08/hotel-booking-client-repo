@@ -8,12 +8,13 @@ const ErrorPage = () => {
 			
 			<h1 className="text-5xl">Oops!</h1>
 			<p className="text-2xl">Sorry, an unexpected error has occurred.</p>
-			<img src="https://i.ibb.co/9VmY926/oops-404-error-with-broken-robot-concept-illustration-114360-5529.jpg" alt="" />
+			<img className="mx-auto"
+			 src="https://i.ibb.co/9VmY926/oops-404-error-with-broken-robot-concept-illustration-114360-5529.jpg" width={400} alt="" />
 			<p className="text-xl">
 				<i>{error.statusText || error.message}</i>
 			</p>
 			<Link to='/'>
-			<button >Back to Home</button>
+			<button className="bg-black py-3 px-4 rounded-lg text-white text-xl" >Back to Home</button>
 			</Link>
 		</div>
 	);
