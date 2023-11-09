@@ -203,7 +203,7 @@ const MyBookings = () => {
 														className="input input-bordered w-full"
 													/>
 													<div className="modal-action" >
-														
+													
 														<button 
 															className="btn"
 															onClick={() =>
@@ -213,6 +213,7 @@ const MyBookings = () => {
 															}>
 															Confirm
 														</button>
+														
 													</div>
 												</div>
 											</dialog>
