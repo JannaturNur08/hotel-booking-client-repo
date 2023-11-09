@@ -8,6 +8,7 @@ import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoutes from "./PrivateRoutes";
 import RoomDetails from "../RoomDetails/RoomDetails";
+import Reviews from "../Pages/MyBookings/Reviews";
 
 const router = createBrowserRouter([
 	{
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 			{
 				path: "/signup",
 				element: <SignUp></SignUp>,
+			},
+			{
+				path: "/reviews/:categoryId",
+				element: <Reviews></Reviews>,
 			},
 			{
 				path: "/:id",

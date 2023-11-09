@@ -3,6 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const MyBookings = () => {
 	const { user } = useAuth();
@@ -11,10 +12,37 @@ const MyBookings = () => {
 	//const userId = user.uid;
 	const [myBookings, setMyBookings] = useState([]);
 	const { _id, bookingDate } = myBookings;
+	//const categoryId = myBookings._id;
 	//const checkIn = myBookings.checkIn;
 	const [newCheckInDate, setNewCheckInDate] = useState(bookingDate);
+	const [openDateUpdateModalId, setOpenDateUpdateModalId] = useState(null);
+	const [openReviewModalId, setOpenReviewModalId] = useState(null);
+	const [review, setReview] = useState({
+		categoryId:'',
+		userName: "",
+		rating: 5,
+		comment: "",
+	});
 	console.log(newCheckInDate);
 
+	const openDateUpdateModal = (bookingId) => {
+		setOpenDateUpdateModalId(bookingId);
+	};
+
+	// Function to close the date update modal
+	const closeDateUpdateModal = () => {
+		setOpenDateUpdateModalId(null);
+	};
+
+	// Function to open the review modal
+	const openReviewModal = (bookingId) => {
+		setOpenReviewModalId(bookingId);
+	};
+
+	// Function to close the review modal
+	const closeReviewModal = () => {
+		setOpenReviewModalId(null);
+	};
 	const canDeleteBooking = (checkInDate) => {
 		const checkInMoment = moment(checkInDate);
 		const now = moment();
@@ -77,13 +105,6 @@ const MyBookings = () => {
 		const bookingDate = document.querySelector(
 			`input[name="Check_in_Date_${bookingId}"]`
 		).value;
-		//setNewCheckInDate(bookingDate);
-
-		//console.log(checkIn);
-		// const updatedDate = {
-		// 	checkIn, // Field name "checkIn" with the value
-		// };
-		//const category_name = myBookings.category_name;
 
 		fetch(`http://localhost:3000/booking/${bookingId}`, {
 			method: "PUT",
@@ -118,15 +139,7 @@ const MyBookings = () => {
 						icon: "success",
 						confirmButtonText: "Confirmed",
 					});
-					// Close the modal programmatically
-					const modal = document.getElementById(
-						`update-modal-${bookingId}`
-					);
-					if (modal) {
-						modal.close();
-					}
-					// Reload the page after a successful update
-					window.location.reload();
+					//closeModal();
 				}
 			})
 			.catch((error) => {
@@ -134,6 +147,51 @@ const MyBookings = () => {
 				console.error("An error occurred:", error);
 			});
 	};
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setReview((prev) => ({ ...prev, [name]: value }));
+	};
+
+	// Function to post a review
+	const postReview = async (categoryId) => {
+		try {
+			const newReview = {
+				categoryId,
+				userName: review.userName,
+
+				rating: review.rating,
+				comment: review.comment,
+			};
+
+			const response = await fetch("http://localhost:3000/api/reviews", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newReview),
+			});
+			const data = await response.json();
+			if (data) {
+				// Handle success
+				console.log("Review submitted", data);
+				Swal.fire({
+					title: "Success!",
+					text: "Submitted review Successfully",
+					icon: "success",
+					confirmButtonText: "Confirmed",
+				});
+			}
+		} catch (error) {
+			// Handle error
+			console.error("Error submitting review:", error);
+		}
+	};
+
+	const handleReviewSubmit = (e) => {
+		e.preventDefault();
+		postReview();
+	};
+
 	return (
 		<div>
 			<h2>My bookings page</h2>
@@ -181,48 +239,143 @@ const MyBookings = () => {
 											<button
 												className="btn bg-gray-600 text-white"
 												onClick={() =>
-													document
-														.getElementById(
-															`update-modal-${user._id}`
-														)
-														.showModal()
+													openDateUpdateModal(
+														user._id
+													)
 												}>
 												Update Date
 											</button>
-											<dialog
-												id={`update-modal-${user._id}`}
-												className="modal">
-												<div className="modal-box">
-													<input
-														type="date"
-														name={`Check_in_Date_${user._id}`}
-														placeholder="Check in Date"
-														defaultValue={
-															user.bookingDate
-														}
-														className="input input-bordered w-full"
-													/>
-													<div className="modal-action" >
-													
-														<button 
-															className="btn"
-															onClick={() =>
-																handleConfirmButton(
-																	user._id
-																)
-															}>
-															Confirm
-														</button>
-														
+											{openDateUpdateModalId ===
+												user._id && (
+												<dialog
+													open
+													className="modal"
+													id={`update-modal-${user._id}`}>
+													<div className="modal-box">
+														<input
+															type="date"
+															name={`Check_in_Date_${user._id}`}
+															placeholder="Check in Date"
+															defaultValue={
+																user.bookingDate
+															}
+															className="input input-bordered w-full"
+														/>
+														<div className="modal-action">
+															<button
+																className="btn"
+																onClick={() =>
+																	handleConfirmButton(
+																		user._id
+																	)
+																}>
+																Confirm
+															</button>
+															<button
+																className="btn"
+																onClick={() =>
+																	closeDateUpdateModal(
+																		user._id
+																	)
+																}>
+																Close
+															</button>
+														</div>
 													</div>
-												</div>
-											</dialog>
+												</dialog>
+											)}
 										</div>
 									</td>
 									<td>
-										<button className="btn bg-slate-600 text-white">
-											Review
-										</button>
+										<div>
+											<button
+												className="btn bg-slate-600 text-white"
+												onClick={() =>
+													openReviewModal(user._id)
+												}>
+												Review
+											</button>
+											{openReviewModalId === user._id && (
+												<dialog
+													open
+													className="modal"
+													id={`review-modal-${user._id}`}>
+													<form
+														onSubmit={
+															handleReviewSubmit
+														}>
+														<div className="p-5">
+															<div>
+																<input
+																	type="text"
+																	name="categoryId"
+																	value={
+																		user.categoryId
+																	}
+																	readOnly
+																	required
+																	className="input input-bordered w-full"
+																/>
+															</div>
+															<div>
+																<input
+																	type="text"
+																	name="userName"
+																	placeholder="User Name"
+																	value={
+																		review.userName
+																	}
+																	onChange={
+																		handleInputChange
+																	}
+																	required
+																	className="input input-bordered w-full"
+																/>
+															</div>
+															<div>
+																<input
+																	type="text"
+																	name="rating"
+																	placeholder="Rating"
+																	
+																	
+																	required
+																	className="input input-bordered w-full"
+																/>
+															</div>
+															<div>
+																<textarea
+																	name="comment"
+																	placeholder="Comment"
+																	value={
+																		review.comment
+																	}
+																	onChange={
+																		handleInputChange
+																	}
+																	required
+																	className="input input-bordered w-full"
+																/>
+															</div>
+														</div>
+														<button
+															type="submit"
+															className="btn">
+															Submit Review
+														</button>
+														<button
+															className="btn ml-3"
+															onClick={() =>
+																closeReviewModal(
+																	user._id
+																)
+															}>
+															Close
+														</button>
+													</form>
+												</dialog>
+											)}
+										</div>
 									</td>
 								</tr>
 							))}
