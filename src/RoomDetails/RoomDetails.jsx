@@ -3,13 +3,17 @@ import { useLoaderData } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-
+import useReviews from "../hooks/useReviews";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 const RoomDetails = () => {
 	// for getting user email
 	const { user } = useAuth();
 	const email = user.email;
 	console.log(email);
 	const roomDetails = useLoaderData();
+	const reviews = useReviews(roomDetails._id);
+	console.log(roomDetails);
 	const { _id, category_name, rooms, description } = roomDetails;
 	const roomImages = roomDetails.rooms.room_images;
 
@@ -73,14 +77,31 @@ const RoomDetails = () => {
 							</div>
 						</div>
 						<h2 className="font-mercellus text-3xl">Reviews</h2>
-						<div className="grid grid-cols-2 mt-10">
-							{roomDetails?.reviews.map((review, idx) => (
+						<div className="grid grid-cols-2 mt-10 gap-3">
+							{reviews.map((review, idx) => (
 								<div key={idx}>
-									<p className="font-mercellus text-xl font-medium">
-										{review.customer_name}
-									</p>
-									<p>{review.review_text}</p>
-									<p>{review.rating}</p>
+									<div className="flex flex-row gap-5">
+										<p className="font-mercellus text-xl font-medium">
+											{review.userName}
+										</p>
+										<div className="flex flex-row gap-2">
+											<p className="text-2xl">
+												({review.rating})
+											</p>
+											<div className="pt-1">
+												<Rating
+													style={{ maxWidth: 100 }}
+													readOnly
+													orientation="horizontal"
+													value={review.rating}
+												/>
+											</div>
+										</div>
+									</div>
+									
+									<p>{review.comment}</p>
+
+									
 								</div>
 							))}
 						</div>

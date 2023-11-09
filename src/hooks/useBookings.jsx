@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useState } from "react";
 
 
 const useBookings = () => {
-   
-   
-    return existingBookings;
+    return (
+        <div>
+            
+        </div>
+    );
 };
 
 export default useBookings;
