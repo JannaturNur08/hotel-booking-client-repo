@@ -3,27 +3,26 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import moment from "moment";
-import { Link } from "react-router-dom";
 
 const MyBookings = () => {
 	const { user } = useAuth();
-	console.log(user);
+	//console.log(user);
 	const email = user.email;
 	//const userId = user.uid;
 	const [myBookings, setMyBookings] = useState([]);
-	const { _id, bookingDate } = myBookings;
-	//const categoryId = myBookings._id;
+	const { _id, bookingDate, categoryId } = myBookings;
+	//const categoryId = myBookings.categoryId;
 	//const checkIn = myBookings.checkIn;
+	console.log(categoryId);
 	const [newCheckInDate, setNewCheckInDate] = useState(bookingDate);
 	const [openDateUpdateModalId, setOpenDateUpdateModalId] = useState(null);
 	const [openReviewModalId, setOpenReviewModalId] = useState(null);
-	const [review, setReview] = useState({
-		categoryId:'',
-		userName: "",
-		rating: 5,
-		comment: "",
-	});
-	console.log(newCheckInDate);
+	// const [review, setReview] = useState({
+	// 	userName: "",
+	// 	rating: 5,
+	// 	comment: "",
+	// });
+	//console.log(newCheckInDate);
 
 	const openDateUpdateModal = (bookingId) => {
 		setOpenDateUpdateModalId(bookingId);
@@ -147,20 +146,61 @@ const MyBookings = () => {
 				console.error("An error occurred:", error);
 			});
 	};
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setReview((prev) => ({ ...prev, [name]: value }));
-	};
+	// const handleInputChange = (e) => {
+	// 	const { name, value } = e.target;
+	// 	setReview((prev) => ({ ...prev, [name]: value }));
+	// };
 
 	// Function to post a review
-	const postReview = async (categoryId) => {
+	// const postReview = async () => {
+	// 	try {
+	// 		const newReview = {
+	// 			categoryId,
+	// 			userName: review.userName,
+
+	// 			rating: review.rating,
+	// 			comment: review.comment,
+	// 		};
+
+	// 		const response = await fetch("http://localhost:3000/api/reviews", {
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 			body: JSON.stringify(newReview),
+	// 		});
+	// 		const data = await response.json();
+	// 		if (data) {
+	// 			// Handle success
+	// 			console.log("Review submitted", data);
+	// 			console.log(newReview);
+	// 			Swal.fire({
+	// 				title: "Success!",
+	// 				text: "Submitted review Successfully",
+	// 				icon: "success",
+	// 				confirmButtonText: "Confirmed",
+	// 			});
+	// 		}
+	// 	} catch (error) {
+	// 		// Handle error
+	// 		console.error("Error submitting review:", error);
+	// 	}
+	// };
+
+	const handleReviewSubmit = async (e) => {
+		e.preventDefault();
+		const form = e.target;
+		const categoryId = form.categoryId.value;
+		const userName = form.userName.value;
+		const rating = parseInt(form.rating.value);
+		const comment = form.comment.value;
 		try {
 			const newReview = {
 				categoryId,
-				userName: review.userName,
+				userName,
 
-				rating: review.rating,
-				comment: review.comment,
+				rating,
+				comment,
 			};
 
 			const response = await fetch("http://localhost:3000/api/reviews", {
@@ -174,6 +214,7 @@ const MyBookings = () => {
 			if (data) {
 				// Handle success
 				console.log("Review submitted", data);
+				console.log(newReview);
 				Swal.fire({
 					title: "Success!",
 					text: "Submitted review Successfully",
@@ -185,11 +226,7 @@ const MyBookings = () => {
 			// Handle error
 			console.error("Error submitting review:", error);
 		}
-	};
-
-	const handleReviewSubmit = (e) => {
-		e.preventDefault();
-		postReview();
+		//postReview();
 	};
 
 	return (
@@ -303,8 +340,9 @@ const MyBookings = () => {
 													<form
 														onSubmit={
 															handleReviewSubmit
-														}>
-														<div className="p-5">
+														}
+														className="form-control bg-slate-700 rounded-lg p-10">
+														<div className="p-5 ">
 															<div>
 																<input
 																	type="text"
@@ -322,37 +360,25 @@ const MyBookings = () => {
 																	type="text"
 																	name="userName"
 																	placeholder="User Name"
-																	value={
-																		review.userName
-																	}
-																	onChange={
-																		handleInputChange
-																	}
 																	required
 																	className="input input-bordered w-full"
 																/>
 															</div>
+															<br />
 															<div>
 																<input
 																	type="text"
 																	name="rating"
 																	placeholder="Rating"
-																	
-																	
 																	required
 																	className="input input-bordered w-full"
 																/>
 															</div>
+															<br />
 															<div>
 																<textarea
 																	name="comment"
 																	placeholder="Comment"
-																	value={
-																		review.comment
-																	}
-																	onChange={
-																		handleInputChange
-																	}
 																	required
 																	className="input input-bordered w-full"
 																/>
@@ -363,8 +389,9 @@ const MyBookings = () => {
 															className="btn">
 															Submit Review
 														</button>
+														<br />
 														<button
-															className="btn ml-3"
+															className="btn"
 															onClick={() =>
 																closeReviewModal(
 																	user._id
