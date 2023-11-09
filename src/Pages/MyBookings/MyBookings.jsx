@@ -8,10 +8,11 @@ const MyBookings = () => {
 	const { user } = useAuth();
 	console.log(user);
 	const email = user.email;
+	//const userId = user.uid;
 	const [myBookings, setMyBookings] = useState([]);
-	const { _id,  checkIn } = myBookings;
+	const { _id,   bookingDate } = myBookings;
 	//const checkIn = myBookings.checkIn;
-	const [newCheckInDate, setNewCheckInDate] = useState(checkIn);
+	const [newCheckInDate, setNewCheckInDate] = useState(bookingDate);
 	console.log(newCheckInDate);
 
 	const canDeleteBooking = (checkInDate) => {
@@ -125,10 +126,10 @@ const MyBookings = () => {
 							<tr>
 								<th>Index</th>
 								{/* <th>Email</th> */}
-								<th>Category Name</th>
-								<th>Email</th>
+								<th>Category Id</th>
+								
+								<th>Booking Date</th>
 								<th>Price</th>
-								<th>Date</th>
 								<th>Cancel</th>
 								<th>Update Date</th>
 								<th>Review</th>
@@ -140,16 +141,17 @@ const MyBookings = () => {
 								<tr key={user._id}>
 									<th>{index + 1}</th>
 									{/* <td>{user.email}</td> */}
-									<td>{user.category_name}</td>
-									<td>{user.email}</td>
+									<td>{user.categoryId}</td>
+									
+									
+									<td>{user.bookingDate}</td>
 									<td>{user.price}</td>
-									<td>{user.checkIn}</td>
 									<td>
 										<button
 											onClick={() =>
 												handleDelete(
 													user._id,
-													user.checkIn
+													user.bookingDate
 												)
 											}
 											className="btn">

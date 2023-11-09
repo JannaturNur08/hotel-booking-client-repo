@@ -102,6 +102,7 @@ const RoomDetails = () => {
 		const price = rooms.price;
 		const newBooking = {
 			userId,
+			email,
 			categoryId,
 			bookingDate: selectedBookingDate,
 			roomCount: selectedRoomCount,
