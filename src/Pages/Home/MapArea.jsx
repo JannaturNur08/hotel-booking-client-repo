@@ -3,7 +3,7 @@ const Maparea = () => {
 		<div className="h-96 bg-slate-100  ">
 			<div className="flex gap-12 justify-center py-10">
 				<div className="flex flex-col gap-6">
-					<p className="text-6xl font-bold text-primary uppercase">
+					<p className="text-6xl font-bold text-primary uppercase" data-aos="zoom-in">
 						Find us here
 					</p>
 					<div>

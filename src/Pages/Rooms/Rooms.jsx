@@ -35,7 +35,7 @@ const Rooms = () => {
 							<p className="text-sm font-jost text-sm">
 								CHECK OUR ACCOMODATIONS{" "}
 							</p>
-							<h2 className="text-6xl font-bold font-mercellus">
+							<h2 className="text-6xl font-bold font-mercellus"  data-aos="zoom-in">
 								Rooms, Suites & Chalets
 							</h2>
 							<Helmet>

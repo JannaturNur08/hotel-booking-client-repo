@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Services = () => {
 	return (
 		<div className="h-96 flex flex-col items-center place-content-center  bg-primary ">
-			<p className="text-white font-bold text-6xl">
+			<p className="text-white font-bold text-6xl" data-aos="zoom-in">
 				World class services
 			</p>
 			<div className="py-9 grid grid-cols-3 gap-10 justify-items-center">
