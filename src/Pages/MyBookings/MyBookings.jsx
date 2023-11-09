@@ -75,7 +75,7 @@ const MyBookings = () => {
 		//e.preventDefault();
 		//const form = e.target;
 		const bookingDate = document.querySelector(
-			'input[name="Check_in_Date"]'
+			`input[name="Check_in_Date_${bookingId}"]`
 		).value;
 		//setNewCheckInDate(bookingDate);
 
@@ -118,7 +118,15 @@ const MyBookings = () => {
 						icon: "success",
 						confirmButtonText: "Confirmed",
 					});
-					
+					// Close the modal programmatically
+					const modal = document.getElementById(
+						`update-modal-${bookingId}`
+					);
+					if (modal) {
+						modal.close();
+					}
+					// Reload the page after a successful update
+					window.location.reload();
 				}
 			})
 			.catch((error) => {
@@ -148,7 +156,7 @@ const MyBookings = () => {
 						</thead>
 						<tbody>
 							{/* row 1 */}
-							{ myBookings.map((user, index) => (
+							{myBookings.map((user, index) => (
 								<tr key={user._id}>
 									<th>{index + 1}</th>
 									{/* <td>{user.email}</td> */}
@@ -175,38 +183,36 @@ const MyBookings = () => {
 												onClick={() =>
 													document
 														.getElementById(
-															"my_modal_1"
+															`update-modal-${user._id}`
 														)
 														.showModal()
 												}>
 												Update Date
 											</button>
 											<dialog
-												id="my_modal_1"
+												id={`update-modal-${user._id}`}
 												className="modal">
 												<div className="modal-box">
 													<input
 														type="date"
-														name="Check_in_Date"
+														name={`Check_in_Date_${user._id}`}
 														placeholder="Check in Date"
-														
+														defaultValue={
+															user.bookingDate
+														}
 														className="input input-bordered w-full"
 													/>
-													<div className="modal-action">
-														<form
-															method="dialog"
-															onSubmit={() =>
+													<div className="modal-action" >
+														
+														<button 
+															className="btn"
+															onClick={() =>
 																handleConfirmButton(
 																	user._id
 																)
 															}>
-															{/* if there is a button in form, it will confirm the modal */}
-															<button
-																className="btn"
-																type="submit">
-																Confirm
-															</button>
-														</form>
+															Confirm
+														</button>
 													</div>
 												</div>
 											</dialog>
