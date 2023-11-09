@@ -71,24 +71,24 @@ const MyBookings = () => {
 			});
 		}
 	};
-	const handleConfirmButton = () => {
+	const handleConfirmButton = (bookingId) => {
 		//e.preventDefault();
 		//const form = e.target;
-		const checkIn = document.querySelector('input[name="Check_in_Date"]').value;
-		setNewCheckInDate(checkIn);
+		const bookingDate = document.querySelector('input[name="Check_in_Date"]').value;
+		setNewCheckInDate(bookingDate);
     
-		console.log(checkIn);
+		//console.log(checkIn);
 		// const updatedDate = {
 		// 	checkIn, // Field name "checkIn" with the value
 		// };
 		//const category_name = myBookings.category_name;
 		
-		fetch(`http://localhost:3000/bookings/${_id}`, {
+		fetch(`http://localhost:3000/booking/${bookingId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({checkIn : checkIn}),
+			body: JSON.stringify({bookingDate : bookingDate}),
 		})
 			.then((res) => {
 				if (!res.ok) {
@@ -107,7 +107,7 @@ const MyBookings = () => {
 						icon: "success",
 						confirmButtonText: "Confirmed",
 					});
-					setNewCheckInDate(checkIn);
+					setNewCheckInDate(bookingDate);
 				}
 			})
 			.catch((error) => {
@@ -179,12 +179,13 @@ const MyBookings = () => {
 														type="date"
 														name="Check_in_Date"
 														placeholder="Check in Date"
+														defaultValue={newCheckInDate}
 														className="input input-bordered w-full"
 													/>
 													<div className="modal-action">
-														<form method="dialog" onSubmit={handleConfirmButton}>
+														<form method="dialog"  onSubmit={() => handleConfirmButton(user._id)}>
 															{/* if there is a button in form, it will confirm the modal */}
-															<button className="btn" >
+															<button className="btn" type="submit" >
 																Confirm
 															</button>
 														</form>
