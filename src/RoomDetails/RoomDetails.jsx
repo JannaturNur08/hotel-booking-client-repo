@@ -7,6 +7,7 @@ import useReviews from "../hooks/useReviews";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 const RoomDetails = () => {
 	// for getting user email
 	const { user } = useAuth();
@@ -165,7 +166,7 @@ const RoomDetails = () => {
 	};
 
 	return (
-		<div>
+		<div className="mb-12">
 			<div className="grid grid-cols-4 px-12  gap-2">
 				<div className="col-span-2 row-span-2">
 					<img src={roomImages[0]} alt="" />
@@ -183,7 +184,10 @@ const RoomDetails = () => {
 					<img src={roomImages[4]} alt="" />
 				</div>
 			</div>
-
+			
+			<Helmet>
+								<title>Room Details</title>
+							</Helmet>
 			<div>
 				<div className="lg:w-3/4 mx-auto mt-5 grid grid-cols-2 pt-10">
 					<div className="space-y-5">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useRooms from "../../hooks/useRooms";
 import RoomCard from "./RoomCard";
+import { Helmet } from "react-helmet";
 
 const Rooms = () => {
 	let rooms = useRooms();
@@ -37,6 +38,9 @@ const Rooms = () => {
 							<h2 className="text-6xl font-bold font-mercellus">
 								Rooms, Suites & Chalets
 							</h2>
+							<Helmet>
+								<title>Rooms Collection</title>
+							</Helmet>
 						</div>
 					</div>
 				</div>

@@ -35,7 +35,7 @@ const RoomCard = ({ room }) => {
 	//	const stars = Array(5).fill(null);
 
 	return (
-		<div>
+		<div className="mb-10">
 			<Link to={`/${_id}`}>
 				<div className="space-y-2">
 					<img src={rooms.room_images[0]} alt="" />

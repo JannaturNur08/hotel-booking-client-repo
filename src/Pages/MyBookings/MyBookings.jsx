@@ -3,6 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 
 const MyBookings = () => {
 	const { user } = useAuth();
@@ -232,6 +233,9 @@ const MyBookings = () => {
 	return (
 		<div>
 			<h2>My bookings page</h2>
+			<Helmet>
+								<title>My Bookings</title>
+							</Helmet>
 			<div className="mx-auto container mt-10 mb-10 lg:w-1/2">
 				<div>
 					<table className=" table ">
