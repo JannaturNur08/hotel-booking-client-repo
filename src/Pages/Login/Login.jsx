@@ -19,7 +19,7 @@ const Login = () => {
 		const form = event.target;
 		const email = form.email.value;
 		const password = form.password.value;
-        setErrors("");
+		setErrors("");
 		signIn(email, password)
 			.then((result) => {
 				const loggedInUser = result.user;
@@ -31,9 +31,13 @@ const Login = () => {
 
 				//get access token
 				axios
-					.post("http://localhost:3000/jwt", user, {
-						withCredentials: true,
-					})
+					.post(
+						"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/jwt",
+						user,
+						{
+							withCredentials: true,
+						}
+					)
 					.then((res) => {
 						//console.log(res.data)
 						if (res.data.success) {
@@ -43,7 +47,9 @@ const Login = () => {
 								icon: "success",
 								confirmButtonText: "Confirmed",
 							});
-							navigate(location?.state?.from?.pathname || "/", { replace: true });
+							navigate(location?.state?.from?.pathname || "/", {
+								replace: true,
+							});
 						}
 					});
 			})
@@ -84,9 +90,7 @@ const Login = () => {
 							Forgot password?
 						</a>
 					</label>
-					<p className="text-left font-bold text-red-700">
-							{errors}
-						</p>
+					<p className="text-left font-bold text-red-700">{errors}</p>
 				</div>
 				<div className="lg:w-1/12 w-1/2  bg-primary text-white hover:bg-[#AB916C] font-mercellus text-center py-3 text-base">
 					<input type="submit" value="Login" />

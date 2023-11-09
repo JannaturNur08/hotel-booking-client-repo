@@ -51,7 +51,9 @@ const MyBookings = () => {
 	};
 
 	useEffect(() => {
-		fetch(`http://localhost:3000/bookings/${email}`)
+		fetch(
+			`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings/${email}`
+		)
 			.then((res) => res.json())
 			.then((data) => setMyBookings(data));
 	}, [email]);
@@ -70,9 +72,12 @@ const MyBookings = () => {
 				confirmButtonText: "Yes, delete it!",
 			}).then((result) => {
 				if (result.isConfirmed) {
-					fetch(`http://localhost:3000/bookings/${_id}`, {
-						method: "DELETE",
-					})
+					fetch(
+						`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings/${_id}`,
+						{
+							method: "DELETE",
+						}
+					)
 						.then((res) => res.json())
 						.then((data) => {
 							console.log(data);
@@ -106,13 +111,16 @@ const MyBookings = () => {
 			`input[name="Check_in_Date_${bookingId}"]`
 		).value;
 
-		fetch(`http://localhost:3000/booking/${bookingId}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ bookingDate: bookingDate }),
-		})
+		fetch(
+			`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/booking/${bookingId}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ bookingDate: bookingDate }),
+			}
+		)
 			.then((res) => {
 				if (!res.ok) {
 					throw new Error("Failed to update booking");
@@ -163,7 +171,7 @@ const MyBookings = () => {
 	// 			comment: review.comment,
 	// 		};
 
-	// 		const response = await fetch("http://localhost:3000/api/reviews", {
+	// 		const response = await fetch("https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/api/reviews", {
 	// 			method: "POST",
 	// 			headers: {
 	// 				"Content-Type": "application/json",
@@ -204,13 +212,16 @@ const MyBookings = () => {
 				comment,
 			};
 
-			const response = await fetch("http://localhost:3000/api/reviews", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(newReview),
-			});
+			const response = await fetch(
+				"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/api/reviews",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(newReview),
+				}
+			);
 			const data = await response.json();
 			if (data) {
 				// Handle success
@@ -234,8 +245,8 @@ const MyBookings = () => {
 		<div>
 			<h2>My bookings page</h2>
 			<Helmet>
-								<title>My Bookings</title>
-							</Helmet>
+				<title>My Bookings</title>
+			</Helmet>
 			<div className="mx-auto container mt-10 mb-10 lg:w-1/2">
 				<div>
 					<table className=" table ">

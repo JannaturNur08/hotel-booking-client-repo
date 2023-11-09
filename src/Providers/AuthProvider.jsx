@@ -47,8 +47,9 @@ const AuthProvider = ({ children }) => {
 			setLoading(false);
 			//if user exists then issue a token
 			if (currentUser) {
-				axios.post(
-						"http://localhost:3000/jwt",
+				axios
+					.post(
+						"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/jwt",
 						loggedUser,
 						{ withCredentials: true }
 					)
@@ -56,8 +57,9 @@ const AuthProvider = ({ children }) => {
 						console.log("token response", res.data);
 					});
 			} else {
-				axios.post(
-						"http://localhost:3000/logout",
+				axios
+					.post(
+						"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/logout",
 						loggedUser,
 						{ withCredentials: true }
 					)

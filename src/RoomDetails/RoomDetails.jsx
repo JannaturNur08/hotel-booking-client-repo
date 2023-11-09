@@ -41,7 +41,9 @@ const RoomDetails = () => {
 
 	const fetchBookingsData = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/bookings");
+			const response = await fetch(
+				"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings"
+			);
 			const bookings = await response.json();
 			calculateRoomAvailability(bookings);
 		} catch (error) {
@@ -111,13 +113,16 @@ const RoomDetails = () => {
 		};
 
 		try {
-			const response = await fetch("http://localhost:3000/bookings", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(newBooking),
-			});
+			const response = await fetch(
+				"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(newBooking),
+				}
+			);
 
 			const data = await response.json();
 			if (data.insertedId) {
@@ -184,10 +189,10 @@ const RoomDetails = () => {
 					<img src={roomImages[4]} alt="" />
 				</div>
 			</div>
-			
+
 			<Helmet>
-								<title>Room Details</title>
-							</Helmet>
+				<title>Room Details</title>
+			</Helmet>
 			<div>
 				<div className="lg:w-3/4 mx-auto mt-5 grid grid-cols-2 pt-10">
 					<div className="space-y-5">
