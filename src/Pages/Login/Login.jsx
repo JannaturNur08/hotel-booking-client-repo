@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import SocialLogin from "./SocialLogin";
 // import axios from "axios";
 
 const Login = () => {
@@ -32,7 +33,7 @@ const Login = () => {
 				//get access token
 				axios
 					.post(
-						"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/jwt",
+						"https://b8a11-server-side-jannatur-nur08.vercel.app/jwt",
 						user,
 						{
 							withCredentials: true,
@@ -41,14 +42,14 @@ const Login = () => {
 					.then((res) => {
 						//console.log(res.data)
 						if (res.data.success) {
+							navigate(location?.state?.from?.pathname || "/", {
+								replace: true,
+							});
 							Swal.fire({
 								title: "Success!",
 								text: "logged in Successfully",
 								icon: "success",
 								confirmButtonText: "Confirmed",
-							});
-							navigate(location?.state?.from?.pathname || "/", {
-								replace: true,
 							});
 						}
 					});
@@ -96,6 +97,7 @@ const Login = () => {
 					<input type="submit" value="Login" />
 				</div>
 				<ToastContainer></ToastContainer>
+				<SocialLogin></SocialLogin>
 			</form>
 			<p className="my-4">
 				New User?{" "}

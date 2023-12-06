@@ -32,6 +32,9 @@ const MyBookings = () => {
 	// Function to close the date update modal
 	const closeDateUpdateModal = () => {
 		setOpenDateUpdateModalId(null);
+		setTimeout(() => {
+			window.location.reload();
+		}, 1000);
 	};
 
 	// Function to open the review modal
@@ -52,7 +55,7 @@ const MyBookings = () => {
 
 	useEffect(() => {
 		fetch(
-			`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings/${email}`
+			`https://b8a11-server-side-jannatur-nur08.vercel.app/bookings/${email}`
 		)
 			.then((res) => res.json())
 			.then((data) => setMyBookings(data));
@@ -73,7 +76,7 @@ const MyBookings = () => {
 			}).then((result) => {
 				if (result.isConfirmed) {
 					fetch(
-						`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings/${_id}`,
+						`https://b8a11-server-side-jannatur-nur08.vercel.app/bookings/${_id}`,
 						{
 							method: "DELETE",
 						}
@@ -112,7 +115,7 @@ const MyBookings = () => {
 		).value;
 
 		fetch(
-			`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/booking/${bookingId}`,
+			`https://b8a11-server-side-jannatur-nur08.vercel.app/booking/${bookingId}`,
 			{
 				method: "PUT",
 				headers: {
@@ -134,7 +137,8 @@ const MyBookings = () => {
 				if (data.message === "Date Updated successfully") {
 					const updatedMyBookings = myBookings.map((booking) => {
 						if (booking._id === bookingId) {
-							return { ...booking, bookingDate };
+							//return { ...booking, bookingDate };
+							booking.bookingDate = bookingDate;
 						}
 						return booking;
 					});
@@ -147,6 +151,7 @@ const MyBookings = () => {
 						icon: "success",
 						confirmButtonText: "Confirmed",
 					});
+
 					//closeModal();
 				}
 			})
@@ -171,7 +176,7 @@ const MyBookings = () => {
 	// 			comment: review.comment,
 	// 		};
 
-	// 		const response = await fetch("https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/api/reviews", {
+	// 		const response = await fetch("https://b8a11-server-side-jannatur-nur08.vercel.app/api/reviews", {
 	// 			method: "POST",
 	// 			headers: {
 	// 				"Content-Type": "application/json",
@@ -213,7 +218,7 @@ const MyBookings = () => {
 			};
 
 			const response = await fetch(
-				"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/api/reviews",
+				"https://b8a11-server-side-jannatur-nur08.vercel.app/api/reviews",
 				{
 					method: "POST",
 					headers: {
@@ -247,7 +252,7 @@ const MyBookings = () => {
 			<Helmet>
 				<title>My Bookings</title>
 			</Helmet>
-			<div className="mx-auto container mt-10 mb-10 lg:w-1/2">
+			<div className="mx-auto container mt-20 mb-20 lg:w-1/2">
 				<div>
 					<table className=" table ">
 						{/* head */}

@@ -1,6 +1,10 @@
+
+
+
 const Quote = () => {
+	
 	return (
-		<div className="h-96 flex flex-col bg-slate-100  items-center justify-center">
+		<div className="h-96 flex flex-col bg-slate-100  items-center justify-center" >
 			<p className="text-1xl text-orange-700 font-bold uppercase text-slate-500">
 				Heritage meets luxury
 			</p>
@@ -10,6 +14,8 @@ const Quote = () => {
 				ski and hiking trails.
 			</p>
 		</div>
+
+		
 	);
 };
 

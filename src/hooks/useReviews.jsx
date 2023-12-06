@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 const useReviews = (categoryId) => {
 	const [reviews, setReviews] = useState([]);
 	useEffect(() => {
-		fetch(
-			`https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/api/reviews?categoryId=${categoryId}`
-		)
+		fetch("https://b8a11-server-side-jannatur-nur08.vercel.app/api/reviews")
 			.then((res) => res.json())
-			.then((data) => setReviews(data))
-			.catch((error) => console.error("Error fetching reviews:", error));
+			.then((data) => {
+				// Filter reviews by categoryId
+				const filteredReviews = data.filter(
+					(review) => review.categoryId === categoryId
+				);
+				setReviews(filteredReviews);
+			});
 	}, [categoryId]);
 	console.log(reviews);
 

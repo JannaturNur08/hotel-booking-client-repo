@@ -16,11 +16,13 @@ const RoomDetails = () => {
 	const userId = user.uid;
 	console.log(email);
 	const roomDetails = useLoaderData();
-	const reviews = useReviews(roomDetails._id);
+	const categoryId = roomDetails._id;
+	const reviews = useReviews(categoryId);
+	console.log(reviews);
 	console.log(roomDetails);
 	const { _id, category_name, rooms, description } = roomDetails;
 	const roomImages = roomDetails.rooms.room_images;
-	const categoryId = roomDetails._id;
+	
 	const totalRooms = roomDetails.rooms.maxRooms;
 
 	const [minCheckInDate, setMinCheckInDate] = useState("");
@@ -42,7 +44,7 @@ const RoomDetails = () => {
 	const fetchBookingsData = async () => {
 		try {
 			const response = await fetch(
-				"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings"
+				"https://b8a11-server-side-jannatur-nur08.vercel.app/bookings"
 			);
 			const bookings = await response.json();
 			calculateRoomAvailability(bookings);
@@ -114,7 +116,7 @@ const RoomDetails = () => {
 
 		try {
 			const response = await fetch(
-				"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/bookings",
+				"https://b8a11-server-side-jannatur-nur08.vercel.app/bookings",
 				{
 					method: "POST",
 					headers: {

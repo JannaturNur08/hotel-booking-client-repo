@@ -1,20 +1,23 @@
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import {FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 
 const SocialLogin = () => {
     const { googleSignIn} = useAuth();
+    const navigate = useNavigate();
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
                 console.log(result.user);
                 Swal.fire({
 					title: "Success!",
-					text: "logged in Successfully",
+					text: "Google logged in Successfully",
 					icon: "success",
 					confirmButtonText: "Confirmed",
 				});
+                navigate('/');
             })
             .catch(error => console.log(error))
     }

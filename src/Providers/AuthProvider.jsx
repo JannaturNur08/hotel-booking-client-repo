@@ -49,9 +49,11 @@ const AuthProvider = ({ children }) => {
 			if (currentUser) {
 				axios
 					.post(
-						"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/jwt",
+						"https://b8a11-server-side-jannatur-nur08.vercel.app/jwt",
 						loggedUser,
-						{ withCredentials: true }
+						{
+							withCredentials: true,
+						}
 					)
 					.then((res) => {
 						console.log("token response", res.data);
@@ -59,9 +61,11 @@ const AuthProvider = ({ children }) => {
 			} else {
 				axios
 					.post(
-						"https://b8a11-server-side-jannatur-nur08-a1qwblfmw.vercel.app/logout",
+						"https://b8a11-server-side-jannatur-nur08.vercel.app/logout",
 						loggedUser,
-						{ withCredentials: true }
+						{
+							withCredentials: true,
+						}
 					)
 					.then((res) => {
 						console.log(res.data);
