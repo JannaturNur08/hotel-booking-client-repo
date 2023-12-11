@@ -1,4 +1,4 @@
-Live Link [https://hotel-book-client-86c05.web.app/]
+(Live Link) [https://hotel-book-client-86c05.web.app/]
 # Hotel Booking Website
 Welcome to the Hotel Booking Website! This web application allows users to browse, book, and manage hotel reservations seamlessly. Below is a comprehensive guide to help you understand and utilize the features implemented in this project.
 
